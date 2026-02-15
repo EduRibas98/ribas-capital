@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ribas Capital | Simulador e Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+<nav class="tab-navigation">
+    <button class="tab-link active" onclick="switchTab(event, 'tab-ferramentas')">Ferramentas Financeiras</button>
+    <button class="tab-link" onclick="switchTab(event, 'tab-educacao')">Aprenda a Investir</button>
+    <button class="tab-link" onclick="switchTab(event, 'tab-servicos')">Nossos Serviços</button>
+    <button class="tab-link" onclick="switchTab(event, 'tab-sobre')">Sobre a Ribas</button>
+</nav>
+
+<div id="tab-ferramentas" class="tab-content active">
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Simulador de Juros Compostos</h1>
+            <p>Descubra o poder do tempo no seu patrimônio.</p>
+            <a href="#simulador-container" class="hero-button">Começar Simulação</a>
+        </div>
+    </header>
+
+    <main id="simulador-container" class="simulador">
+        <div class="card" id="area-simulador">
+            <div class="grid-inputs">
+                <div class="campo">
+                    <label>Valor Inicial (R$)</label>
+                    <input type="number" id="valorInicial" placeholder="Ex: 1000">
+                </div>
+                <div class="campo">
+                    <label>Aporte Mensal (R$)</label>
+                    <input type="number" id="aporteMensal" placeholder="Ex: 500">
+                </div>
+                <div class="campo">
+                    <label>Taxa Mensal (%)</label>
+                    <input type="number" id="taxa" placeholder="Ex: 1" step="0.1">
+                </div>
+                <div class="campo">
+                    <label>Tempo (meses)</label>
+                    <input type="number" id="tempo" placeholder="Ex: 120">
+                </div>
+                <div class="campo">
+                    <label>Comparador:</label>
+                    <select id="comparador">
+                        <option value="0.005">Poupança (0,5% a.m.)</option>
+                        <option value="0.0037">Inflação / IPCA (Média)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="botoes-container" style="display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0;">
+                <button onclick="calcular()" style="flex: 2;">Calcular Investimento</button>
+                <button onclick="limpar()" class="btn-limpar" style="flex: 1; background: #64748b;">Limpar</button>
+            </div>
+
+            <div id="cards-resumo"></div>
+            
+            <div class="chart-container">
+                <canvas id="grafico"></canvas>
+            </div>
+
+            <div id="tabela-evolucao-container" style="display: none; margin-top: 30px; overflow-x: auto;">
+                <table id="tabela-dados">
+                    <thead>
+                        <tr>
+                            <th>Mês</th>
+                            <th>Total Investido</th>
+                            <th>Juros</th>
+                            <th>Acumulado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpo-tabela"></tbody>
+                </table>
+            </div>
+
+            <button id="btn-exportar-pdf" onclick="exportarPDF()" class="btn-pdf" style="display: none;">
+                Baixar Relatório em PDF
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>Calculadora de Meta Reversa</h2>
+            <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 20px;">Descubra quanto poupar mensalmente para atingir seu objetivo.</p>
+            <div class="grid-inputs">
+                <div class="campo">
+                    <label>Objetivo Final (R$)</label>
+                    <input type="number" id="objetivoFinal" placeholder="Ex: 1000000">
+                </div>
+                <div class="campo">
+                    <label>Prazo (Meses)</label>
+                    <input type="number" id="tempoMeta" placeholder="Ex: 120">
+                </div>
+                <div class="campo">
+                    <label>Taxa Esperada (%)</label>
+                    <input type="number" id="taxaMeta" placeholder="Ex: 1">
+                </div>
+            </div>
+            <button onclick="calcularMetaReversa()" style="background: #1e293b;">Calcular Plano</button>
+            <div id="resultado-meta" style="margin-top: 25px; font-weight: bold; color: #00b386;"></div>
+        </div>
+    </main>
+</div>
+
+<div id="tab-educacao" class="tab-content">
+    <div class="container-extra">
+        <h2 style="color: #00b386; margin-bottom: 30px;">Portal de Educação Financeira</h2>
+        
+        <div class="menu-educacao">
+            <button class="btn-tema active" onclick="abrirCategoria('cat-intro', this)">Introdução</button>
+            <button class="btn-tema" onclick="abrirCategoria('cat-rendafixa', this)">Renda Fixa</button>
+            <button class="btn-tema" onclick="abrirCategoria('cat-rendavariavel', this)">Renda Variável</button>
+        </div>
+
+        <div id="submenus-container">
+            <div id="menu-rf" class="submenu-temas" style="display:none;">
+                <button class="btn-subtema" onclick="mostrarPagina('pg-tesouro')">Tesouro Direto</button>
+                <button class="btn-subtema" onclick="mostrarPagina('pg-cdb')">CDBs</button>
+            </div>
+            <div id="menu-rv" class="submenu-temas" style="display:none;">
+                <button class="btn-subtema" onclick="mostrarPagina('pg-acoes')">Ações</button>
+                <button class="btn-subtema" onclick="mostrarPagina('pg-fiis')">FIIs</button>
+            </div>
+        </div>
+
+        <div id="area-leitura">
+            <article id="pg-intro" class="pagina-artigo active">
+                <div class="artigo-completo">
+                    <h2>📌 O que é Renda Fixa</h2>
+                    <p>Renda fixa é um tipo de investimento em que as regras de remuneração são definidas no momento da aplicação. Ou seja, você já sabe como será calculado o seu rendimento. Isso não significa que você sabe exatamente quanto vai ganhar (em todos os casos), mas sabe a lógica do rendimento.</p>
+
+                    <h3>🔎 Exemplos:</h3>
+                    <ul>
+                        <li>Tesouro Direto</li>
+                        <li>CDB (Certificado de Depósito Bancário)</li>
+                        <li>LCI e LCA</li>
+                        <li>Debêntures</li>
+                    </ul>
+
+                    <h3>📊 Tipos de rentabilidade:</h3>
+                    <ul>
+                        <li><strong>Prefixada:</strong> você sabe a taxa exata (ex: 10% ao ano).</li>
+                        <li><strong>Pós-fixada:</strong> atrelada a um índice (ex: CDI ou Selic).</li>
+                        <li><strong>Híbrida:</strong> mistura taxa fixa + inflação (ex: IPCA + 5%).</li>
+                    </ul>
+
+                    <h3>✅ Características:</h3>
+                    <ul>
+                        <li>Maior previsibilidade</li>
+                        <li>Menor volatilidade</li>
+                        <li>Geralmente menor risco</li>
+                        <li>Indicado para reserva de emergência e objetivos de curto/médio prazo</li>
+                    </ul>
+
+                    <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
+
+                    <h2>📌 O que é Renda Variável</h2>
+                    <p>Na renda variável, não é possível saber previamente quanto você vai ganhar ou perder, pois o valor do investimento oscila conforme o mercado.</p>
+
+                    <h3>🔎 Exemplos:</h3>
+                    <ul>
+                        <li>Ações (negociadas na B3)</li>
+                        <li>Fundos imobiliários (FIIs)</li>
+                        <li>ETFs</li>
+                        <li>Criptomoedas</li>
+                    </ul>
+
+                    <h3>📊 Características:</h3>
+                    <ul>
+                        <li>Maior potencial de retorno</li>
+                        <li>Oscilações frequentes (volatilidade)</li>
+                        <li>Maior risco no curto prazo</li>
+                        <li>Indicado para objetivos de longo prazo</li>
+                    </ul>
+
+                    <p>Aqui, o retorno depende de fatores como: Resultados das empresas, Economia, Juros, Cenário político, Oferta e demanda.</p>
+
+                    <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
+
+                    <h2>⚖️ Principais Diferenças</h2>
+                    <table id="tabela-dados">
+                        <thead>
+                            <tr>
+                                <th>Característica</th>
+                                <th>Renda Fixa</th>
+                                <th>Renda Variável</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Rendimento</td>
+                                <td>Regras definidas</td>
+                                <td>Retorno imprevisível</td>
+                            </tr>
+                            <tr>
+                                <td>Risco</td>
+                                <td>Menor risco</td>
+                                <td>Maior risco</td>
+                            </tr>
+                            <tr>
+                                <td>Oscilação</td>
+                                <td>Menor oscilação</td>
+                                <td>Alta oscilação</td>
+                            </tr>
+                            <tr>
+                                <td>Perfil</td>
+                                <td>Mais previsível</td>
+                                <td>Mais incerta</td>
+                            </tr>
+                            <tr>
+                                <td>Objetivo</td>
+                                <td>Ideal para segurança</td>
+                                <td>Ideal para crescimento</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
+
+                    <h2>🎯 Por que é importante diversificar?</h2>
+                    <p>Diversificação significa não colocar todo o seu dinheiro em um único tipo de investimento.</p>
+
+                    <h3>🧠 Por quê?</h3>
+                    <p>Porque cada classe de ativo se comporta de maneira diferente. Exemplo:</p>
+                    <ul>
+                        <li>Se a bolsa cai, a renda fixa pode estar rendendo bem (especialmente com juros altos).</li>
+                        <li>Se os juros caem, ações e FIIs podem se valorizar mais.</li>
+                    </ul>
+
+                    <h3>📉 Redução de risco</h3>
+                    <p>Ao diversificar, você reduz o impacto de perdas em um único ativo, diminui a volatilidade da carteira e aumenta a consistência dos resultados no longo prazo. É a famosa ideia de: <strong>“Não colocar todos os ovos na mesma cesta.”</strong></p>
+
+                    <h3>🏗 Exemplo prático</h3>
+                    <p>Uma carteira equilibrada pode ter uma parte em renda fixa (segurança e estabilidade) e uma parte em renda variável (crescimento e valorização). O percentual ideal depende de: Seu perfil de risco, Seus objetivos, Seu prazo e Sua tolerância a oscilações.</p>
+
+                    <h3>🚀 Conclusão</h3>
+                    <ul>
+                        <li><strong>Renda fixa</strong> = previsibilidade e segurança.</li>
+                        <li><strong>Renda variável</strong> = potencial de crescimento, mas com oscilações.</li>
+                        <li><strong>Diversificação</strong> = estratégia inteligente para equilibrar risco e retorno.</li>
+                    </ul>
+                </div>
+            </article>
+
+            <article id="pg-tesouro" class="pagina-artigo" style="display:none;"><div class="artigo-completo"><h2>Tesouro Direto</h2><p>Conteúdo detalhado em breve...</p></div></article>
+            <article id="pg-cdb" class="pagina-artigo" style="display:none;"><div class="artigo-completo"><h2>CDBs</h2><p>Conteúdo detalhado em breve...</p></div></article>
+            <article id="pg-acoes" class="pagina-artigo" style="display:none;"><div class="artigo-completo"><h2>Ações</h2><p>Conteúdo detalhado em breve...</p></div></article>
+            <article id="pg-fiis" class="pagina-artigo" style="display:none;"><div class="artigo-completo"><h2>FIIs</h2><p>Conteúdo detalhado em breve...</p></div></article>
+        </div>
+    </div>
+</div>
+
+<footer class="footer-site">
+    <p>&copy; 2026 Ribas Capital. Todos os direitos reservados.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
