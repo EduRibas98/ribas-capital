@@ -13,7 +13,7 @@
 <nav class="tab-navigation">
     <button class="tab-link active" onclick="switchTab(event, 'tab-ferramentas')">Ferramentas Financeiras</button>
     <button class="tab-link" onclick="switchTab(event, 'tab-educacao')">Aprenda a Investir</button>
-    <button class="tab-link" onclick="switchTab(event, 'tab-servicos')">Nossos Serviços</button>
+    <button class="tab-link" onclick="switchTab(event, 'tab-renda')">Renda Extra</button>
     <button class="tab-link" onclick="switchTab(event, 'tab-sobre')">Sobre a Ribas</button>
 </nav>
 
@@ -131,58 +131,32 @@
         <div id="area-leitura">
             <article id="pg-intro" class="pagina-artigo active">
                 <div class="artigo-completo">
-                    <h2>📌 O que é Renda Fixa</h2>
+                    <h2>O que é Renda Fixa</h2>
                     <p>Renda fixa é um tipo de investimento em que as regras de remuneração são definidas no momento da aplicação. Ou seja, você já sabe como será calculado o seu rendimento. Isso não significa que você sabe exatamente quanto vai ganhar (em todos os casos), mas sabe a lógica do rendimento.</p>
-
-                    <h3>🔎 Exemplos:</h3>
+                    <h3>Exemplos:</h3>
                     <ul>
                         <li>Tesouro Direto</li>
                         <li>CDB (Certificado de Depósito Bancário)</li>
                         <li>LCI e LCA</li>
                         <li>Debêntures</li>
                     </ul>
-
-                    <h3>📊 Tipos de rentabilidade:</h3>
+                    <h3>Tipos de rentabilidade:</h3>
                     <ul>
                         <li><strong>Prefixada:</strong> você sabe a taxa exata (ex: 10% ao ano).</li>
                         <li><strong>Pós-fixada:</strong> atrelada a um índice (ex: CDI ou Selic).</li>
                         <li><strong>Híbrida:</strong> mistura taxa fixa + inflação (ex: IPCA + 5%).</li>
                     </ul>
-
-                    <h3>✅ Características:</h3>
-                    <ul>
-                        <li>Maior previsibilidade</li>
-                        <li>Menor volatilidade</li>
-                        <li>Geralmente menor risco</li>
-                        <li>Indicado para reserva de emergência e objetivos de curto/médio prazo</li>
-                    </ul>
-
                     <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
-
-                    <h2>📌 O que é Renda Variável</h2>
+                    <h2>O que é Renda Variável</h2>
                     <p>Na renda variável, não é possível saber previamente quanto você vai ganhar ou perder, pois o valor do investimento oscila conforme o mercado.</p>
-
-                    <h3>🔎 Exemplos:</h3>
+                    <h3>Exemplos:</h3>
                     <ul>
                         <li>Ações (negociadas na B3)</li>
                         <li>Fundos imobiliários (FIIs)</li>
                         <li>ETFs</li>
                         <li>Criptomoedas</li>
                     </ul>
-
-                    <h3>📊 Características:</h3>
-                    <ul>
-                        <li>Maior potencial de retorno</li>
-                        <li>Oscilações frequentes (volatilidade)</li>
-                        <li>Maior risco no curto prazo</li>
-                        <li>Indicado para objetivos de longo prazo</li>
-                    </ul>
-
-                    <p>Aqui, o retorno depende de fatores como: Resultados das empresas, Economia, Juros, Cenário político, Oferta e demanda.</p>
-
-                    <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
-
-                    <h2>⚖️ Principais Diferenças</h2>
+                    <h3>Principais Diferenças</h3>
                     <table id="tabela-dados">
                         <thead>
                             <tr>
@@ -192,65 +166,125 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Rendimento</td>
-                                <td>Regras definidas</td>
-                                <td>Retorno imprevisível</td>
-                            </tr>
-                            <tr>
-                                <td>Risco</td>
-                                <td>Menor risco</td>
-                                <td>Maior risco</td>
-                            </tr>
-                            <tr>
-                                <td>Oscilação</td>
-                                <td>Menor oscilação</td>
-                                <td>Alta oscilação</td>
-                            </tr>
-                            <tr>
-                                <td>Perfil</td>
-                                <td>Mais previsível</td>
-                                <td>Mais incerta</td>
-                            </tr>
-                            <tr>
-                                <td>Objetivo</td>
-                                <td>Ideal para segurança</td>
-                                <td>Ideal para crescimento</td>
-                            </tr>
+                            <tr><td>Regras de rendimento</td><td>Definidas</td><td>Retorno imprevisível</td></tr>
+                            <tr><td>Risco</td><td>Menor risco</td><td>Maior risco</td></tr>
+                            <tr><td>Oscilação</td><td>Menor oscilação</td><td>Alta oscilação</td></tr>
                         </tbody>
                     </table>
-
-                    <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
-
-                    <h2>🎯 Por que é importante diversificar?</h2>
-                    <p>Diversificação significa não colocar todo o seu dinheiro em um único tipo de investimento.</p>
-
-                    <h3>🧠 Por quê?</h3>
-                    <p>Porque cada classe de ativo se comporta de maneira diferente. Exemplo:</p>
-                    <ul>
-                        <li>Se a bolsa cai, a renda fixa pode estar rendendo bem (especialmente com juros altos).</li>
-                        <li>Se os juros caem, ações e FIIs podem se valorizar mais.</li>
-                    </ul>
-
-                    <h3>📉 Redução de risco</h3>
-                    <p>Ao diversificar, você reduz o impacto de perdas em um único ativo, diminui a volatilidade da carteira e aumenta a consistência dos resultados no longo prazo. É a famosa ideia de: <strong>“Não colocar todos os ovos na mesma cesta.”</strong></p>
-
-                    <h3>🏗 Exemplo prático</h3>
-                    <p>Uma carteira equilibrada pode ter uma parte em renda fixa (segurança e estabilidade) e uma parte em renda variável (crescimento e valorização). O percentual ideal depende de: Seu perfil de risco, Seus objetivos, Seu prazo e Sua tolerância a oscilações.</p>
-
-                    <h3>🚀 Conclusão</h3>
-                    <ul>
-                        <li><strong>Renda fixa</strong> = previsibilidade e segurança.</li>
-                        <li><strong>Renda variável</strong> = potencial de crescimento, mas com oscilações.</li>
-                        <li><strong>Diversificação</strong> = estratégia inteligente para equilibrar risco e retorno.</li>
-                    </ul>
                 </div>
             </article>
 
-            <article id="pg-tesouro" class="pagina-artigo" style="display:none;"><div class="artigo-completo"><h2>Tesouro Direto</h2><p>Conteúdo detalhado em breve...</p></div></article>
-            <article id="pg-cdb" class="pagina-artigo" style="display:none;"><div class="artigo-completo"><h2>CDBs</h2><p>Conteúdo detalhado em breve...</p></div></article>
-            <article id="pg-acoes" class="pagina-artigo" style="display:none;"><div class="artigo-completo"><h2>Ações</h2><p>Conteúdo detalhado em breve...</p></div></article>
-            <article id="pg-fiis" class="pagina-artigo" style="display:none;"><div class="artigo-completo"><h2>FIIs</h2><p>Conteúdo detalhado em breve...</p></div></article>
+            <article id="pg-tesouro" class="pagina-artigo" style="display:none;">
+                <div class="artigo-completo">
+                    <h2>O que é o Tesouro Direto</h2>
+                    <p>O Tesouro Direto é um programa do Governo Federal, criado em parceria com a B3, que permite que pessoas físicas comprem títulos públicos federais pela internet.</p>
+                    <p>Ao investir no Tesouro Direto, o investidor está emprestando dinheiro ao Governo Federal, que se compromete a devolver o valor aplicado acrescido de juros em uma data futura. É considerado o investimento de menor risco de crédito da economia brasileira, pois é garantido pelo próprio Tesouro Nacional.</p>
+
+                    <h3>Como o investidor pode investir</h3>
+                    <p>O processo é simples:</p>
+                    <ul>
+                        <li>Abrir conta em uma corretora ou banco habilitado.</li>
+                        <li>Transferir recursos para a instituição.</li>
+                        <li>Acessar a plataforma e escolher o título.</li>
+                        <li>Aplicar valores a partir de aproximadamente R$ 30.</li>
+                        <li>Acompanhar o investimento até o vencimento ou vender antes, se necessário.</li>
+                    </ul>
+                    <p>O Tesouro Nacional recompra os títulos diariamente em dias úteis, garantindo liquidez.</p>
+
+                    <h3>Tipos de Tesouro Direto</h3>
+                    
+                    <h4>Tesouro Selic</h4>
+                    <p>Atrelado à Taxa Selic, é um título pós-fixado.</p>
+                    <ul>
+                        <li>Baixa volatilidade</li>
+                        <li>Alta liquidez</li>
+                        <li>Ideal para reserva de emergência</li>
+                        <li>Pouco impacto da marcação a mercado</li>
+                    </ul>
+
+                    <h4>Tesouro Prefixado</h4>
+                    <p>Possui taxa fixa definida no momento da compra.</p>
+                    <ul>
+                        <li>Permite travar uma taxa de juros</li>
+                        <li>Pode oscilar bastante antes do vencimento</li>
+                        <li>Indicado quando se acredita na queda futura dos juros</li>
+                    </ul>
+
+                    <h4>Tesouro IPCA+</h4>
+                    <p>Rende inflação (IPCA) mais uma taxa fixa. O IPCA é calculado pelo IBGE.</p>
+                    <ul>
+                        <li>Protege contra inflação</li>
+                        <li>Garante ganho real se mantido até o vencimento</li>
+                        <li>Indicado para objetivos de longo prazo</li>
+                    </ul>
+
+                    <h3>Riscos</h3>
+                    <p><strong>Risco de mercado (marcação a mercado):</strong> O preço dos títulos varia diariamente conforme as expectativas de juros. Se vendido antes do vencimento, pode haver lucro adicional ou prejuízo.</p>
+                    <p><strong>Risco fiscal:</strong> É o risco de o governo não honrar o pagamento. É considerado o menor risco de crédito da economia brasileira.</p>
+                    <p><strong>Risco de inflação:</strong> No prefixado, a inflação pode reduzir o ganho real. O IPCA+ protege contra esse risco.</p>
+
+                    <h3>Tributação</h3>
+                    <p>O Tesouro Direto segue a tabela regressiva de Imposto de Renda:</p>
+                    <table id="tabela-dados">
+                        <thead>
+                            <tr>
+                                <th>Prazo da Aplicação</th>
+                                <th>Alíquota de IR</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Até 180 dias</td><td>22,5%</td></tr>
+                            <tr><td>181 a 360 dias</td><td>20%</td></tr>
+                            <tr><td>361 a 720 dias</td><td>17,5%</td></tr>
+                            <tr><td>Acima de 720 dias</td><td>15%</td></tr>
+                        </tbody>
+                    </table>
+                    <p style="margin-bottom: 30px;"><small>O IOF incide apenas em resgates realizados em menos de 30 dias. O imposto é cobrado apenas sobre o rendimento.</small></p>
+
+                    <h3>Resumo: Tipo de título e indicação</h3>
+                    <table id="tabela-dados">
+                        <thead>
+                            <tr>
+                                <th>Tipo de Título</th>
+                                <th>Melhor para</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Tesouro Selic</td><td>Reserva de emergência e curto prazo</td></tr>
+                            <tr><td>Tesouro Prefixado</td><td>Travar juros altos e metas de médio prazo</td></tr>
+                            <tr><td>Tesouro IPCA+</td><td>Proteção contra inflação e objetivos de longo prazo</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+
+            <article id="pg-cdb" class="pagina-artigo" style="display:none;"><div class="artigo-completo"><h2>CDBs</h2><p>Conteúdo detalhado em breve.</p></div></article>
+            <article id="pg-acoes" class="pagina-artigo" style="display:none;"><div class="artigo-completo"><h2>Ações</h2><p>Conteúdo detalhado em breve.</p></div></article>
+            <article id="pg-fiis" class="pagina-artigo" style="display:none;"><div class="artigo-completo"><h2>FIIs</h2><p>Conteúdo detalhado em breve.</p></div></article>
+        </div>
+    </div>
+</div>
+
+<div id="tab-renda" class="tab-content">
+    <div class="container-extra">
+        <h2 style="color: #00b386;">Renda Extra</h2>
+        <div class="artigo-completo">
+            <p>Aumentar sua renda é o combustível que acelera os juros compostos. Quanto maior o aporte, mais cedo vem a liberdade.</p>
+            <h3>Ideias para começar hoje:</h3>
+            <ul>
+                <li>Freelancer Digital: Design, escrita, tradução ou tráfego pago.</li>
+                <li>Venda de Ativos: Desapegue de itens parados em casa.</li>
+                <li>Consultoria: Transforme seu conhecimento profissional em mentorias.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="tab-sobre" class="tab-content">
+    <div class="container-extra">
+        <h2 style="color: #00b386;">Sobre a Ribas Capital</h2>
+        <div class="artigo-completo">
+            <p>A Ribas Capital nasceu com o propósito de democratizar o acesso à educação financeira de qualidade e ferramentas de planejamento financeiro acessíveis.</p>
         </div>
     </div>
 </div>

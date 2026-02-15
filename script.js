@@ -35,7 +35,7 @@ function renderizarGrafico(labels, valoresRibas, valoresComp, nomeComp) {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false, // Permite que a altura do CSS (400px) mande no gráfico
+            maintainAspectRatio: false,
             plugins: {
                 legend: { position: 'bottom' }
             },
@@ -55,10 +55,9 @@ function renderizarGrafico(labels, valoresRibas, valoresComp, nomeComp) {
 
 // --- FUNÇÃO PARA EXPORTAR PDF ---
 window.exportarPDF = function() {
-    const elemento = document.getElementById('area-simulador'); // Pega o card principal do simulador
+    const elemento = document.getElementById('area-simulador');
     const btnPdf = document.getElementById('btn-exportar-pdf');
     
-    // Esconde o botão momentaneamente para não sair no PDF
     btnPdf.style.display = 'none';
 
     const opt = {
@@ -70,40 +69,57 @@ window.exportarPDF = function() {
     };
 
     html2pdf().set(opt).from(elemento).save().then(() => {
-        btnPdf.style.display = 'block'; // Mostra o botão de volta
+        btnPdf.style.display = 'inline-block';
     });
 };
 
-// --- NAVEGAÇÃO ---
+// --- NAVEGAÇÃO PRINCIPAL (ABAS) ---
 window.switchTab = function(event, tabId) {
+    // Esconder todas as abas
     const contents = document.querySelectorAll(".tab-content");
-    contents.forEach(c => c.classList.remove("active"));
+    contents.forEach(c => {
+        c.classList.remove("active");
+        c.style.display = "none";
+    });
 
+    // Remover active dos botões
     const links = document.querySelectorAll(".tab-link");
     links.forEach(l => l.classList.remove("active"));
 
-    document.getElementById(tabId).classList.add("active");
+    // Mostrar aba clicada
+    const activeTab = document.getElementById(tabId);
+    if (activeTab) {
+        activeTab.classList.add("active");
+        activeTab.style.display = "block";
+    }
+    
     event.currentTarget.classList.add("active");
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
+// --- NAVEGAÇÃO PORTAL EDUCAÇÃO (CATEGORIAS) ---
 window.abrirCategoria = function(catId, btn) {
+    // Resetar botões
     const botoes = document.querySelectorAll('.btn-tema');
     botoes.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
+    // Resetar menus e páginas
     document.getElementById('menu-rf').style.display = 'none';
     document.getElementById('menu-rv').style.display = 'none';
 
     const paginas = document.querySelectorAll('.pagina-artigo');
     paginas.forEach(p => p.style.display = 'none');
 
+    // Lógica de exibição
     if (catId === 'cat-intro') {
         document.getElementById('pg-intro').style.display = 'block';
     } else if (catId === 'cat-rendafixa') {
         document.getElementById('menu-rf').style.display = 'flex';
+        document.getElementById('pg-tesouro').style.display = 'block'; // Abre o primeiro conteúdo por padrão
     } else if (catId === 'cat-rendavariavel') {
         document.getElementById('menu-rv').style.display = 'flex';
+        document.getElementById('pg-acoes').style.display = 'block'; // Abre o primeiro conteúdo por padrão
     }
 };
 
@@ -114,7 +130,6 @@ window.mostrarPagina = function(pgId) {
     const target = document.getElementById(pgId);
     if (target) {
         target.style.display = 'block';
-        target.scrollIntoView({ behavior: 'smooth' });
     }
 };
 
@@ -141,8 +156,7 @@ window.calcular = function() {
     let valoresComp = [valorInicial];
     let labelsMeses = ["Início"];
     
-    const tbody = document.getElementById("corpo-tabela");
-    tbody.innerHTML = "";
+    let linhasTabela = ""; // Usar string para performance
     const formatarBR = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
     for (let i = 1; i <= tempoMeses; i++) {
@@ -151,14 +165,12 @@ window.calcular = function() {
         montanteComp = montanteComp * (1 + taxaComp) + aporteMensal;
         totalInvestido += aporteMensal;
 
-        // Adiciona ao gráfico a cada mês ou pula para não travar se for muitos anos
         labelsMeses.push(`Mês ${i}`);
         valoresRibas.push(parseFloat(montante.toFixed(2)));
         valoresComp.push(parseFloat(montanteComp.toFixed(2)));
 
-        // Popula a tabela (limitando a 240 meses para performance)
-        if (i <= 240) {
-            tbody.innerHTML += `
+        if (i <= 360) { // Limite de 30 anos na tabela para não travar
+            linhasTabela += `
                 <tr>
                     <td>${i}</td>
                     <td>${formatarBR(totalInvestido)}</td>
@@ -168,6 +180,8 @@ window.calcular = function() {
             `;
         }
     }
+
+    document.getElementById("corpo-tabela").innerHTML = linhasTabela;
 
     const lucroExtra = montante - montanteComp;
     const rendaPassiva = montante * taxaMensal;
@@ -185,7 +199,7 @@ window.calcular = function() {
     `;
 
     document.getElementById("tabela-evolucao-container").style.display = "block";
-    document.getElementById("btn-exportar-pdf").style.display = "inline-block"; // Mostra o botão de PDF
+    document.getElementById("btn-exportar-pdf").style.display = "inline-block";
     
     renderizarGrafico(labelsMeses, valoresRibas, valoresComp, nomeComp);
 };
@@ -209,4 +223,8 @@ window.calcularMetaReversa = function() {
     `;
 };
 
-window.limpar = function() { location.reload(); };
+window.limpar = function() { 
+    if(confirm("Deseja limpar todos os dados da simulação?")) {
+        location.reload(); 
+    }
+};
