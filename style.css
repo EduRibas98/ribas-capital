@@ -17,8 +17,8 @@ body {
 .simulador {
     padding: 40px 20px;
     display: flex;
-    flex-direction: column; /* Alinha os cards um abaixo do outro */
-    align-items: center;    /* Centraliza os cards horizontalmente */
+    flex-direction: column;
+    align-items: center;    
 }
 
 .card {
@@ -29,7 +29,7 @@ body {
     max-width: 800px;
     color: #1e293b;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    margin-bottom: 20px; /* Espaço entre o simulador e a meta reversa */
+    margin-bottom: 20px;
 }
 
 .grid-inputs {
@@ -54,10 +54,10 @@ input:focus {
     background: #f0fffb;
 }
 
-/* 3. GRÁFICO E TABELA (CORREÇÕES ESPECÍFICAS) */
+/* 3. GRÁFICO E TABELA */
 .chart-container {
     position: relative;
-    height: 450px; /* Aumenta a altura do gráfico */
+    height: 450px; 
     width: 100%;
     margin: 30px 0;
 }
@@ -65,12 +65,12 @@ input:focus {
 #tabela-dados {
     width: 100%;
     margin: 20px auto;
-    border-collapse: collapse; /* Faz as bordas ficarem simples */
+    border-collapse: collapse;
     background: white;
 }
 
 #tabela-dados th, #tabela-dados td {
-    border: 1px solid #e2e8f0; /* Cria as linhas da tabela */
+    border: 1px solid #e2e8f0;
     padding: 12px;
     text-align: center;
 }
@@ -157,11 +157,62 @@ button:hover {
     display: block;
 }
 
-/* 6. ÁREA DE EDUCAÇÃO */
+/* 6. ÁREA DE EDUCAÇÃO E MENU DE TEMAS */
 .container-extra {
     max-width: 1000px;
     margin: 40px auto;
     padding: 0 20px;
+}
+
+.menu-educacao {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.btn-tema {
+    background: #334155;
+    padding: 12px 20px;
+    width: auto;
+    font-size: 16px;
+}
+
+.btn-tema.active {
+    background: #00b386;
+}
+
+/* 9. SUBMENUS E BOTÕES DE EDUCAÇÃO (MUDANÇA SOLICITADA) */
+.submenu-temas {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.btn-subtema {
+    background-color: #475569; /* Cor Cinza Azulado para diferenciar */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    width: auto; /* Não ocupa a largura toda */
+}
+
+.btn-subtema:hover {
+    background-color: #1e293b; 
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.btn-subtema.active {
+    background-color: #0ea5e9; /* Azul vibrante para o artigo ativo */
+    box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
 }
 
 .artigo-completo {
@@ -171,20 +222,6 @@ button:hover {
     border-radius: 20px;
     color: #1e293b;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-bottom: 25px;
-}
-
-.stat-card {
-    padding: 20px;
-    background: #f8fafc;
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
 }
 
 /* 7. HERO E ANIMAÇÕES */
@@ -202,7 +239,7 @@ button:hover {
     color: white;
     text-decoration: none;
     padding: 18px 32px;
-    border-radius: 12px; /* Harmonizado com o botão principal */
+    border-radius: 12px;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
@@ -210,13 +247,6 @@ button:hover {
     border: none;
     box-shadow: 0 10px 20px rgba(0, 179, 134, 0.2);
     animation: flutuar 3s ease-in-out infinite;
-}
-
-.hero-button:hover {
-    background: #009973;
-    transform: translateY(-3px);
-    box-shadow: 0 15px 25px rgba(0, 179, 134, 0.3);
-    color: white;
 }
 
 @keyframes flutuar {
@@ -234,4 +264,7 @@ button:hover {
 @media (max-width: 768px) {
     .card { padding: 20px; width: 95%; }
     .grid-inputs, .stats-grid { grid-template-columns: 1fr; }
-    .tab-link { padding:
+    .tab-navigation { flex-wrap: wrap; }
+    .tab-link { padding: 10px 15px; font-size: 14px; }
+    .btn-subtema { width: 100%; } /* No celular, eles ficam um abaixo do outro */
+}

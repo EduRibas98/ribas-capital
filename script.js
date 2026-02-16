@@ -1,230 +1,203 @@
-// --- CONFIGURAÇÃO GLOBAL DO GRÁFICO ---
+// --- CONFIGURAÇÃO GLOBAL E API ---
+const TOKEN = "rhwoawpasjrgK2eTM2MqS1";
+
+// --- COTAÇÃO DO BITCOIN ---
+const COTACAO_BITCOIN_BRL = 360494.90; 
+
+const meusAtivos = {
+    acoes: {
+        "LEVE3": 45, "ITSA3": 81, "WEGE3": 31, "EGIE3": 48, 
+        "JHSF3": 124, "MDIA3": 41, "BBDC3": 80, "AUVP11": 15
+    },
+    fiis: {
+        "KNRI11": 2, "HGBS11": 27, "TVRI11": 5, "HGLG11": 2
+    },
+    internacional: {
+        "BRK.B": 0.17804802, "GOOGL": 0.3531, "JPM": 0.4465, "KO": 0.9565
+    },
+    cripto: {
+        "BTC": 0.00037339 
+    },
+    imoveisFisicos: 28637.25, 
+    rendaFixa: 1000.00,
+    // --- INSIRA SEU GANHO ACUMULADO CALCULADO MANUALMENTE AQUI ---
+    // Fórmula: (Vendas - Compras) + Proventos + Patrimônio Atual
+    ganhoManual: 15450.75 
+};
+
 let meuGrafico = null;
 
+async function atualizarCarteiraReal() {
+    const tickersNacionais = [...Object.keys(meusAtivos.acoes), ...Object.keys(meusAtivos.fiis)].join(',');
+    const tickersInternacionais = [...Object.keys(meusAtivos.internacional)].join(',');
+    
+    try {
+        const url = `https://brapi.dev/api/quote/${tickersNacionais},${tickersInternacionais},USDBRL?token=${TOKEN}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        const usdData = data.results.find(res => res.symbol === "USDBRL");
+        const cotacaoDolar = usdData ? usdData.regularMarketPrice : 5.22; 
+
+        // Atualizar nota informativa
+        const notaDolar = document.getElementById('nota-dolar');
+        if(notaDolar) {
+            notaDolar.innerText = `* Câmbio: US$ 1 = R$ ${cotacaoDolar.toFixed(2)} | BTC: R$ ${COTACAO_BITCOIN_BRL.toLocaleString('pt-BR')}`;
+        }
+
+        let totalAcoes = 0, totalFiis = 0, totalInternacional = 0, totalCripto = 0, totalRF = meusAtivos.rendaFixa;
+        let listaAtivos = [];
+
+        // 1. Processar Ativos da API
+        data.results.forEach(ativo => {
+            const ticker = ativo.symbol;
+            const preco = ativo.regularMarketPrice || 0;
+            let valorBRL = 0;
+            let classe = "";
+
+            if(meusAtivos.acoes[ticker]) {
+                valorBRL = preco * meusAtivos.acoes[ticker];
+                totalAcoes += valorBRL;
+                classe = "Empresas BR";
+            } 
+            else if(meusAtivos.fiis[ticker]) {
+                valorBRL = preco * meusAtivos.fiis[ticker];
+                totalFiis += valorBRL;
+                classe = "FIIs";
+            }
+            else if(meusAtivos.internacional[ticker]) {
+                valorBRL = (preco * cotacaoDolar) * meusAtivos.internacional[ticker];
+                totalInternacional += valorBRL;
+                classe = "Empresas EUA";
+            }
+
+            if(classe !== "") {
+                listaAtivos.push({ classe, ticker, valorBRL });
+            }
+        });
+
+        // 2. Adicionar Ativos Manuais na Lista
+        const valorBTC = meusAtivos.cripto.BTC * COTACAO_BITCOIN_BRL;
+        totalCripto = valorBTC;
+        listaAtivos.push({ classe: "Cripto", ticker: "BITCOIN", valorBRL: valorBTC });
+        
+        listaAtivos.push({ classe: "Imóvel", ticker: "TERRENO", valorBRL: meusAtivos.imoveisFisicos });
+        totalFiis += meusAtivos.imoveisFisicos; 
+
+        listaAtivos.push({ classe: "Renda Fixa", ticker: "IPCA", valorBRL: meusAtivos.rendaFixa });
+
+        // --- ORDENAÇÃO: DA MAIOR POSIÇÃO PARA A MENOR ---
+        listaAtivos.sort((a, b) => b.valorBRL - a.valorBRL);
+
+        // 3. Renderizar Tabela Ordenada
+        const corpoTabela = document.getElementById('corpo-tabela-carteira');
+        if (corpoTabela) {
+            corpoTabela.innerHTML = "";
+            listaAtivos.forEach(item => {
+                corpoTabela.innerHTML += `
+                    <tr>
+                        <td>${item.classe}</td>
+                        <td><strong>${item.ticker}</strong></td>
+                        <td>R$ ${item.valorBRL.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    </tr>`;
+            });
+        }
+
+        // --- ATUALIZAR PATRIMÔNIO TOTAL E GANHO ACUMULADO ---
+        const totalGeral = totalAcoes + totalFiis + totalInternacional + totalCripto + totalRF;
+        
+        const totalEl = document.getElementById('valor-patrimonio-total');
+        if(totalEl) totalEl.innerText = totalGeral.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+        const ganhoEl = document.getElementById('valor-ganho-acumulado');
+        if(ganhoEl) ganhoEl.innerText = meusAtivos.ganhoManual.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+        // --- ATUALIZAR PERCENTUAIS (COLADOS NO %) ---
+        atualizarCard('perc-rf', totalRF, totalGeral);
+        atualizarCard('perc-fii', totalFiis, totalGeral);
+        atualizarCard('perc-acoes', totalAcoes, totalGeral);
+        atualizarCard('perc-internacional', totalInternacional, totalGeral);
+        atualizarCard('perc-cripto', totalCripto, totalGeral);
+
+    } catch (error) {
+        console.error("Erro na carteira:", error);
+    }
+}
+
+function atualizarCard(id, parcial, total) {
+    const el = document.getElementById(id);
+    if(el && total > 0) {
+        el.innerText = ((parcial / total) * 100).toFixed(1) + "%";
+    }
+}
+
+// --- NAVEGAÇÃO ---
+window.switchTab = function(event, tabId) {
+    document.querySelectorAll(".tab-content").forEach(c => { c.classList.remove("active"); c.style.display = "none"; });
+    document.querySelectorAll(".tab-link").forEach(l => l.classList.remove("active"));
+    const activeTab = document.getElementById(tabId);
+    if (activeTab) { activeTab.classList.add("active"); activeTab.style.display = "block"; }
+    if(event) event.currentTarget.classList.add("active");
+    if(tabId === 'tab-sobre') atualizarCarteiraReal();
+};
+
+window.abrirSubSobre = function(subId, btn) {
+    document.querySelectorAll('.sub-sobre-content').forEach(s => s.style.display = 'none');
+    btn.parentElement.querySelectorAll('.btn-tema').forEach(b => b.classList.remove('active'));
+    document.getElementById(subId).style.display = 'block';
+    btn.classList.add('active');
+    if(subId === 'sobre-carteira') atualizarCarteiraReal();
+};
+
+// --- SIMULADOR ---
 function renderizarGrafico(labels, valoresRibas, valoresComp, nomeComp) {
     const ctx = document.getElementById('grafico').getContext('2d');
-    
-    if (meuGrafico) {
-        meuGrafico.destroy();
-    }
-
+    if (meuGrafico) meuGrafico.destroy();
     meuGrafico = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
             datasets: [
-                {
-                    label: 'Ribas Capital',
-                    data: valoresRibas,
-                    borderColor: '#00b386',
-                    backgroundColor: 'rgba(0, 179, 134, 0.1)',
-                    fill: true,
-                    tension: 0.3,
-                    pointRadius: 2
-                },
-                {
-                    label: nomeComp,
-                    data: valoresComp,
-                    borderColor: '#94a3b8',
-                    borderDash: [5, 5],
-                    fill: false,
-                    tension: 0.3,
-                    pointRadius: 0
-                }
+                { label: 'Ribas Capital', data: valoresRibas, borderColor: '#00b386', backgroundColor: 'rgba(0, 179, 134, 0.1)', fill: true, tension: 0.3 },
+                { label: nomeComp, data: valoresComp, borderColor: '#94a3b8', borderDash: [5, 5], tension: 0.3 }
             ]
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { position: 'bottom' }
-            },
-            scales: {
-                y: { 
-                    beginAtZero: true,
-                    ticks: {
-                        callback: function(value) {
-                            return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-                        }
-                    }
-                }
-            }
-        }
+        options: { responsive: true, maintainAspectRatio: false }
     });
 }
 
-// --- FUNÇÃO PARA EXPORTAR PDF ---
-window.exportarPDF = function() {
-    const elemento = document.getElementById('area-simulador');
-    const btnPdf = document.getElementById('btn-exportar-pdf');
-    
-    btnPdf.style.display = 'none';
-
-    const opt = {
-        margin: [10, 10, 10, 10],
-        filename: 'Planejamento_Ribas_Capital.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
-
-    html2pdf().set(opt).from(elemento).save().then(() => {
-        btnPdf.style.display = 'inline-block';
-    });
-};
-
-// --- NAVEGAÇÃO PRINCIPAL (ABAS) ---
-window.switchTab = function(event, tabId) {
-    // Esconder todas as abas
-    const contents = document.querySelectorAll(".tab-content");
-    contents.forEach(c => {
-        c.classList.remove("active");
-        c.style.display = "none";
-    });
-
-    // Remover active dos botões
-    const links = document.querySelectorAll(".tab-link");
-    links.forEach(l => l.classList.remove("active"));
-
-    // Mostrar aba clicada
-    const activeTab = document.getElementById(tabId);
-    if (activeTab) {
-        activeTab.classList.add("active");
-        activeTab.style.display = "block";
-    }
-    
-    event.currentTarget.classList.add("active");
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-
-// --- NAVEGAÇÃO PORTAL EDUCAÇÃO (CATEGORIAS) ---
-window.abrirCategoria = function(catId, btn) {
-    // Resetar botões
-    const botoes = document.querySelectorAll('.btn-tema');
-    botoes.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-
-    // Resetar menus e páginas
-    document.getElementById('menu-rf').style.display = 'none';
-    document.getElementById('menu-rv').style.display = 'none';
-
-    const paginas = document.querySelectorAll('.pagina-artigo');
-    paginas.forEach(p => p.style.display = 'none');
-
-    // Lógica de exibição
-    if (catId === 'cat-intro') {
-        document.getElementById('pg-intro').style.display = 'block';
-    } else if (catId === 'cat-rendafixa') {
-        document.getElementById('menu-rf').style.display = 'flex';
-        document.getElementById('pg-tesouro').style.display = 'block'; // Abre o primeiro conteúdo por padrão
-    } else if (catId === 'cat-rendavariavel') {
-        document.getElementById('menu-rv').style.display = 'flex';
-        document.getElementById('pg-acoes').style.display = 'block'; // Abre o primeiro conteúdo por padrão
-    }
-};
-
-window.mostrarPagina = function(pgId) {
-    const paginas = document.querySelectorAll('.pagina-artigo');
-    paginas.forEach(p => p.style.display = 'none');
-    
-    const target = document.getElementById(pgId);
-    if (target) {
-        target.style.display = 'block';
-    }
-};
-
-// --- CÁLCULO DO SIMULADOR ---
 window.calcular = function() {
-    const valorInicial = parseFloat(document.getElementById("valorInicial").value) || 0;
-    const aporteMensal = parseFloat(document.getElementById("aporteMensal").value) || 0;
-    const taxaInput = parseFloat(document.getElementById("taxa").value) || 0;
-    const taxaMensal = taxaInput / 100;
-    const tempoMeses = parseInt(document.getElementById("tempo").value) || 0;
-    const taxaComp = parseFloat(document.getElementById("comparador").value);
-    const nomeComp = document.getElementById("comparador").options[document.getElementById("comparador").selectedIndex].text;
-
-    if (tempoMeses <= 0) {
-        alert("Por favor, insira um tempo válido.");
-        return;
-    }
-
-    let montante = valorInicial;
-    let montanteComp = valorInicial;
-    let totalInvestido = valorInicial;
+    const vIni = parseFloat(document.getElementById("valorInicial").value) || 0;
+    const aMen = parseFloat(document.getElementById("aporteMensal").value) || 0;
+    const taxa = (parseFloat(document.getElementById("taxa").value) || 0) / 100;
+    const tempo = parseInt(document.getElementById("tempo").value) || 0;
+    const tComp = parseFloat(document.getElementById("comparador").value);
+    const nComp = document.getElementById("comparador").options[document.getElementById("comparador").selectedIndex].text;
     
-    let valoresRibas = [valorInicial];
-    let valoresComp = [valorInicial];
-    let labelsMeses = ["Início"];
-    
-    let linhasTabela = ""; // Usar string para performance
-    const formatarBR = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    let m = vIni, mC = vIni, tI = vIni;
+    let vR = [vIni], vC = [vIni], labs = ["Início"], html = "";
 
-    for (let i = 1; i <= tempoMeses; i++) {
-        let jurosMes = montante * taxaMensal;
-        montante = montante + jurosMes + aporteMensal;
-        montanteComp = montanteComp * (1 + taxaComp) + aporteMensal;
-        totalInvestido += aporteMensal;
-
-        labelsMeses.push(`Mês ${i}`);
-        valoresRibas.push(parseFloat(montante.toFixed(2)));
-        valoresComp.push(parseFloat(montanteComp.toFixed(2)));
-
-        if (i <= 360) { // Limite de 30 anos na tabela para não travar
-            linhasTabela += `
-                <tr>
-                    <td>${i}</td>
-                    <td>${formatarBR(totalInvestido)}</td>
-                    <td>${formatarBR(jurosMes)}</td>
-                    <td>${formatarBR(montante)}</td>
-                </tr>
-            `;
+    for (let i = 1; i <= tempo; i++) {
+        let j = m * taxa; 
+        m = m + j + aMen; 
+        mC = mC * (1 + tComp) + aMen; 
+        tI += aMen;
+        vR.push(m); vC.push(mC); labs.push(`Mês ${i}`);
+        
+        if (tempo <= 20 || i % 12 === 0 || i === tempo) {
+            html += `<tr><td>Mês ${i}</td><td>R$ ${tI.toLocaleString('pt-BR')}</td><td>R$ ${j.toLocaleString('pt-BR')}</td><td>R$ ${m.toLocaleString('pt-BR')}</td></tr>`;
         }
     }
-
-    document.getElementById("corpo-tabela").innerHTML = linhasTabela;
-
-    const lucroExtra = montante - montanteComp;
-    const rendaPassiva = montante * taxaMensal;
-    const linkWhats = `https://wa.me/5511999999999?text=Simulação Ribas: Total de ${formatarBR(montante)}`;
-
+    document.getElementById("corpo-tabela").innerHTML = html;
     document.getElementById("cards-resumo").innerHTML = `
         <div class="stats-grid">
-            <div class="stat-card"><span>TOTAL ACUMULADO</span><strong style="color: #00b386;">${formatarBR(montante)}</strong></div>
-            <div class="stat-card"><span>RENDA ESTIMADA</span><strong style="color: #007bff;">${formatarBR(rendaPassiva)}/mês</strong></div>
-            <div class="stat-card"><span>GANHO VS ${nomeComp.toUpperCase()}</span><strong style="color: #f59e0b;">${formatarBR(lucroExtra)}</strong></div>
-        </div>
-        <div style="margin: 20px 0;">
-            <a href="${linkWhats}" target="_blank" class="btn-whatsapp">Consultar Especialista</a>
-        </div>
-    `;
-
+            <div class="stat-card"><span>TOTAL ACUMULADO</span><strong>R$ ${m.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</strong></div>
+            <div class="stat-card"><span>RENDIMENTO FINAL</span><strong>R$ ${(m * taxa).toLocaleString('pt-BR', {minimumFractionDigits: 2})}/mês</strong></div>
+        </div>`;
     document.getElementById("tabela-evolucao-container").style.display = "block";
     document.getElementById("btn-exportar-pdf").style.display = "inline-block";
-    
-    renderizarGrafico(labelsMeses, valoresRibas, valoresComp, nomeComp);
+    renderizarGrafico(labs, vR, vC, nComp);
 };
 
-// --- META REVERSA ---
-window.calcularMetaReversa = function() {
-    const objetivo = parseFloat(document.getElementById("objetivoFinal").value);
-    const meses = parseInt(document.getElementById("tempoMeta").value);
-    const taxa = (parseFloat(document.getElementById("taxaMeta").value) / 100);
-
-    if (!objetivo || !meses || !taxa) {
-        alert("Preencha todos os campos da meta.");
-        return;
-    }
-
-    const aporteNecessario = (objetivo * taxa) / (Math.pow(1 + taxa, meses) - 1);
-
-    document.getElementById("resultado-meta").innerHTML = `
-        <p>Aporte Mensal Necessário: <br>
-        <span style="font-size: 1.8rem;">${aporteNecessario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></p>
-    `;
-};
-
-window.limpar = function() { 
-    if(confirm("Deseja limpar todos os dados da simulação?")) {
-        location.reload(); 
-    }
-};
+window.exportarPDF = () => { html2pdf().from(document.getElementById('area-simulador')).save(); };
+window.limpar = () => { location.reload(); };

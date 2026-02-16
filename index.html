@@ -7,6 +7,92 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        /* CSS para garantir visibilidade das linhas e ajustes de layout */
+        .tabela-estilizada, #tabela-dados {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 15px;
+            background-color: white;
+        }
+        
+        .tabela-estilizada th, .tabela-estilizada td, 
+        #tabela-dados th, #tabela-dados td {
+            border: 1px solid #e2e8f0 !important;
+            padding: 12px;
+            text-align: left;
+            color: #1e293b;
+        }
+
+        .tabela-estilizada th, #tabela-dados th {
+            background-color: #f8fafc;
+            font-weight: 600;
+        }
+
+        /* Grid de Destaques (Patrimônio e Ganho) */
+        .patrimonio-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .patrimonio-total-container {
+            background: #1e293b;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border-left: 5px solid #00b386;
+        }
+        
+        .patrimonio-total-container.ganho-card {
+            border-left: 5px solid #3b82f6; /* Cor azul para o ganho */
+        }
+
+        .patrimonio-total-container span { 
+            font-size: 0.85rem; 
+            opacity: 0.8; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .patrimonio-total-container h2 { font-size: 2.2rem; margin: 5px 0; color: #00b386; }
+        .patrimonio-total-container.ganho-card h2 { color: #3b82f6; }
+
+        /* Ícone de Informação */
+        .info-icon {
+            cursor: help;
+            background: #64748b;
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            font-size: 0.7rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 8px;
+            font-weight: bold;
+        }
+
+        /* Percentuais colados e alinhamento */
+        .stat-card { white-space: nowrap; }
+        .stat-card strong { margin-left: 5px; color: #00b386; }
+        
+        .chart-container { position: relative; height: 40vh; width: 100%; margin: 20px 0; }
+        
+        .btn-limpar { cursor: pointer; border: none; transition: 0.3s; }
+        .btn-limpar:hover { opacity: 0.8; }
+
+        /* Ajuste para telas pequenas */
+        @media (max-width: 600px) {
+            .patrimonio-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
 
@@ -29,22 +115,10 @@
     <main id="simulador-container" class="simulador">
         <div class="card" id="area-simulador">
             <div class="grid-inputs">
-                <div class="campo">
-                    <label>Valor Inicial (R$)</label>
-                    <input type="number" id="valorInicial" placeholder="Ex: 1000">
-                </div>
-                <div class="campo">
-                    <label>Aporte Mensal (R$)</label>
-                    <input type="number" id="aporteMensal" placeholder="Ex: 500">
-                </div>
-                <div class="campo">
-                    <label>Taxa Mensal (%)</label>
-                    <input type="number" id="taxa" placeholder="Ex: 1" step="0.1">
-                </div>
-                <div class="campo">
-                    <label>Tempo (meses)</label>
-                    <input type="number" id="tempo" placeholder="Ex: 120">
-                </div>
+                <div class="campo"><label>Valor Inicial (R$)</label><input type="number" id="valorInicial" placeholder="Ex: 1000"></div>
+                <div class="campo"><label>Aporte Mensal (R$)</label><input type="number" id="aporteMensal" placeholder="Ex: 500"></div>
+                <div class="campo"><label>Taxa Mensal (%)</label><input type="number" id="taxa" placeholder="Ex: 1" step="0.1"></div>
+                <div class="campo"><label>Tempo (meses)</label><input type="number" id="tempo" placeholder="Ex: 120"></div>
                 <div class="campo">
                     <label>Comparador:</label>
                     <select id="comparador">
@@ -56,7 +130,7 @@
 
             <div class="botoes-container" style="display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0;">
                 <button onclick="calcular()" style="flex: 2;">Calcular Investimento</button>
-                <button onclick="limpar()" class="btn-limpar" style="flex: 1; background: #64748b;">Limpar</button>
+                <button onclick="limpar()" class="btn-limpar" style="flex: 1; background: #64748b; color: white;">Limpar</button>
             </div>
 
             <div id="cards-resumo"></div>
@@ -79,30 +153,9 @@
                 </table>
             </div>
 
-            <button id="btn-exportar-pdf" onclick="exportarPDF()" class="btn-pdf" style="display: none;">
+            <button id="btn-exportar-pdf" onclick="exportarPDF()" class="btn-pdf" style="display: none; margin-top: 20px;">
                 Baixar Relatório em PDF
             </button>
-        </div>
-
-        <div class="card">
-            <h2>Calculadora de Meta Reversa</h2>
-            <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 20px;">Descubra quanto poupar mensalmente para atingir seu objetivo.</p>
-            <div class="grid-inputs">
-                <div class="campo">
-                    <label>Objetivo Final (R$)</label>
-                    <input type="number" id="objetivoFinal" placeholder="Ex: 1000000">
-                </div>
-                <div class="campo">
-                    <label>Prazo (Meses)</label>
-                    <input type="number" id="tempoMeta" placeholder="Ex: 120">
-                </div>
-                <div class="campo">
-                    <label>Taxa Esperada (%)</label>
-                    <input type="number" id="taxaMeta" placeholder="Ex: 1">
-                </div>
-            </div>
-            <button onclick="calcularMetaReversa()" style="background: #1e293b;">Calcular Plano</button>
-            <div id="resultado-meta" style="margin-top: 25px; font-weight: bold; color: #00b386;"></div>
         </div>
     </main>
 </div>
@@ -110,157 +163,18 @@
 <div id="tab-educacao" class="tab-content">
     <div class="container-extra">
         <h2 style="color: #00b386; margin-bottom: 30px;">Portal de Educação Financeira</h2>
-        
         <div class="menu-educacao">
             <button class="btn-tema active" onclick="abrirCategoria('cat-intro', this)">Introdução</button>
             <button class="btn-tema" onclick="abrirCategoria('cat-rendafixa', this)">Renda Fixa</button>
             <button class="btn-tema" onclick="abrirCategoria('cat-rendavariavel', this)">Renda Variável</button>
         </div>
-
-        <div id="submenus-container">
-            <div id="menu-rf" class="submenu-temas" style="display:none;">
-                <button class="btn-subtema" onclick="mostrarPagina('pg-tesouro')">Tesouro Direto</button>
-                <button class="btn-subtema" onclick="mostrarPagina('pg-cdb')">CDBs</button>
-            </div>
-            <div id="menu-rv" class="submenu-temas" style="display:none;">
-                <button class="btn-subtema" onclick="mostrarPagina('pg-acoes')">Ações</button>
-                <button class="btn-subtema" onclick="mostrarPagina('pg-fiis')">FIIs</button>
-            </div>
-        </div>
-
         <div id="area-leitura">
             <article id="pg-intro" class="pagina-artigo active">
                 <div class="artigo-completo">
-                    <h2>O que é Renda Fixa</h2>
-                    <p>Renda fixa é um tipo de investimento em que as regras de remuneração são definidas no momento da aplicação. Ou seja, você já sabe como será calculado o seu rendimento. Isso não significa que você sabe exatamente quanto vai ganhar (em todos os casos), mas sabe a lógica do rendimento.</p>
-                    <h3>Exemplos:</h3>
-                    <ul>
-                        <li>Tesouro Direto</li>
-                        <li>CDB (Certificado de Depósito Bancário)</li>
-                        <li>LCI e LCA</li>
-                        <li>Debêntures</li>
-                    </ul>
-                    <h3>Tipos de rentabilidade:</h3>
-                    <ul>
-                        <li><strong>Prefixada:</strong> você sabe a taxa exata (ex: 10% ao ano).</li>
-                        <li><strong>Pós-fixada:</strong> atrelada a um índice (ex: CDI ou Selic).</li>
-                        <li><strong>Híbrida:</strong> mistura taxa fixa + inflação (ex: IPCA + 5%).</li>
-                    </ul>
-                    <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
-                    <h2>O que é Renda Variável</h2>
-                    <p>Na renda variável, não é possível saber previamente quanto você vai ganhar ou perder, pois o valor do investimento oscila conforme o mercado.</p>
-                    <h3>Exemplos:</h3>
-                    <ul>
-                        <li>Ações (negociadas na B3)</li>
-                        <li>Fundos imobiliários (FIIs)</li>
-                        <li>ETFs</li>
-                        <li>Criptomoedas</li>
-                    </ul>
-                    <h3>Principais Diferenças</h3>
-                    <table id="tabela-dados">
-                        <thead>
-                            <tr>
-                                <th>Característica</th>
-                                <th>Renda Fixa</th>
-                                <th>Renda Variável</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Regras de rendimento</td><td>Definidas</td><td>Retorno imprevisível</td></tr>
-                            <tr><td>Risco</td><td>Menor risco</td><td>Maior risco</td></tr>
-                            <tr><td>Oscilação</td><td>Menor oscilação</td><td>Alta oscilação</td></tr>
-                        </tbody>
-                    </table>
+                    <h2>O que é Investir?</h2>
+                    <p>Investir é o ato de aplicar recursos com a expectativa de obter um retorno futuro superior ao valor aplicado.</p>
                 </div>
             </article>
-
-            <article id="pg-tesouro" class="pagina-artigo" style="display:none;">
-                <div class="artigo-completo">
-                    <h2>O que é o Tesouro Direto</h2>
-                    <p>O Tesouro Direto é um programa do Governo Federal, criado em parceria com a B3, que permite que pessoas físicas comprem títulos públicos federais pela internet.</p>
-                    <p>Ao investir no Tesouro Direto, o investidor está emprestando dinheiro ao Governo Federal, que se compromete a devolver o valor aplicado acrescido de juros em uma data futura. É considerado o investimento de menor risco de crédito da economia brasileira, pois é garantido pelo próprio Tesouro Nacional.</p>
-
-                    <h3>Como o investidor pode investir</h3>
-                    <p>O processo é simples:</p>
-                    <ul>
-                        <li>Abrir conta em uma corretora ou banco habilitado.</li>
-                        <li>Transferir recursos para a instituição.</li>
-                        <li>Acessar a plataforma e escolher o título.</li>
-                        <li>Aplicar valores a partir de aproximadamente R$ 30.</li>
-                        <li>Acompanhar o investimento até o vencimento ou vender antes, se necessário.</li>
-                    </ul>
-                    <p>O Tesouro Nacional recompra os títulos diariamente em dias úteis, garantindo liquidez.</p>
-
-                    <h3>Tipos de Tesouro Direto</h3>
-                    
-                    <h4>Tesouro Selic</h4>
-                    <p>Atrelado à Taxa Selic, é um título pós-fixado.</p>
-                    <ul>
-                        <li>Baixa volatilidade</li>
-                        <li>Alta liquidez</li>
-                        <li>Ideal para reserva de emergência</li>
-                        <li>Pouco impacto da marcação a mercado</li>
-                    </ul>
-
-                    <h4>Tesouro Prefixado</h4>
-                    <p>Possui taxa fixa definida no momento da compra.</p>
-                    <ul>
-                        <li>Permite travar uma taxa de juros</li>
-                        <li>Pode oscilar bastante antes do vencimento</li>
-                        <li>Indicado quando se acredita na queda futura dos juros</li>
-                    </ul>
-
-                    <h4>Tesouro IPCA+</h4>
-                    <p>Rende inflação (IPCA) mais uma taxa fixa. O IPCA é calculado pelo IBGE.</p>
-                    <ul>
-                        <li>Protege contra inflação</li>
-                        <li>Garante ganho real se mantido até o vencimento</li>
-                        <li>Indicado para objetivos de longo prazo</li>
-                    </ul>
-
-                    <h3>Riscos</h3>
-                    <p><strong>Risco de mercado (marcação a mercado):</strong> O preço dos títulos varia diariamente conforme as expectativas de juros. Se vendido antes do vencimento, pode haver lucro adicional ou prejuízo.</p>
-                    <p><strong>Risco fiscal:</strong> É o risco de o governo não honrar o pagamento. É considerado o menor risco de crédito da economia brasileira.</p>
-                    <p><strong>Risco de inflação:</strong> No prefixado, a inflação pode reduzir o ganho real. O IPCA+ protege contra esse risco.</p>
-
-                    <h3>Tributação</h3>
-                    <p>O Tesouro Direto segue a tabela regressiva de Imposto de Renda:</p>
-                    <table id="tabela-dados">
-                        <thead>
-                            <tr>
-                                <th>Prazo da Aplicação</th>
-                                <th>Alíquota de IR</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Até 180 dias</td><td>22,5%</td></tr>
-                            <tr><td>181 a 360 dias</td><td>20%</td></tr>
-                            <tr><td>361 a 720 dias</td><td>17,5%</td></tr>
-                            <tr><td>Acima de 720 dias</td><td>15%</td></tr>
-                        </tbody>
-                    </table>
-                    <p style="margin-bottom: 30px;"><small>O IOF incide apenas em resgates realizados em menos de 30 dias. O imposto é cobrado apenas sobre o rendimento.</small></p>
-
-                    <h3>Resumo: Tipo de título e indicação</h3>
-                    <table id="tabela-dados">
-                        <thead>
-                            <tr>
-                                <th>Tipo de Título</th>
-                                <th>Melhor para</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Tesouro Selic</td><td>Reserva de emergência e curto prazo</td></tr>
-                            <tr><td>Tesouro Prefixado</td><td>Travar juros altos e metas de médio prazo</td></tr>
-                            <tr><td>Tesouro IPCA+</td><td>Proteção contra inflação e objetivos de longo prazo</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </article>
-
-            <article id="pg-cdb" class="pagina-artigo" style="display:none;"><div class="artigo-completo"><h2>CDBs</h2><p>Conteúdo detalhado em breve.</p></div></article>
-            <article id="pg-acoes" class="pagina-artigo" style="display:none;"><div class="artigo-completo"><h2>Ações</h2><p>Conteúdo detalhado em breve.</p></div></article>
-            <article id="pg-fiis" class="pagina-artigo" style="display:none;"><div class="artigo-completo"><h2>FIIs</h2><p>Conteúdo detalhado em breve.</p></div></article>
         </div>
     </div>
 </div>
@@ -269,27 +183,73 @@
     <div class="container-extra">
         <h2 style="color: #00b386;">Renda Extra</h2>
         <div class="artigo-completo">
-            <p>Aumentar sua renda é o combustível que acelera os juros compostos. Quanto maior o aporte, mais cedo vem a liberdade.</p>
-            <h3>Ideias para começar hoje:</h3>
-            <ul>
-                <li>Freelancer Digital: Design, escrita, tradução ou tráfego pago.</li>
-                <li>Venda de Ativos: Desapegue de itens parados em casa.</li>
-                <li>Consultoria: Transforme seu conhecimento profissional em mentorias.</li>
-            </ul>
+            <p>Aumentar seus aportes é o segredo para a liberdade financeira antecipada.</p>
         </div>
     </div>
 </div>
 
 <div id="tab-sobre" class="tab-content">
     <div class="container-extra">
-        <h2 style="color: #00b386;">Sobre a Ribas Capital</h2>
-        <div class="artigo-completo">
-            <p>A Ribas Capital nasceu com o propósito de democratizar o acesso à educação financeira de qualidade e ferramentas de planejamento financeiro acessíveis.</p>
+        <h2 style="color: #00b386; margin-bottom: 30px;">Ribas Capital</h2>
+
+        <div class="menu-educacao">
+            <button class="btn-tema active" onclick="abrirSubSobre('sobre-empresa', this)">A Empresa</button>
+            <button class="btn-tema" onclick="abrirSubSobre('sobre-carteira', this)">Minha Carteira</button>
+        </div>
+
+        <div id="area-sobre" style="margin-top: 30px;">
+            <article id="sobre-empresa" class="sub-sobre-content">
+                <div class="artigo-completo">
+                    <h3>Nossa História</h3>
+                    <p>A <strong>Ribas Capital</strong> nasceu para simplificar o mercado financeiro para você.</p>
+                </div>
+            </article>
+
+            <article id="sobre-carteira" class="sub-sobre-content" style="display:none;">
+                <div class="artigo-completo">
+                    <h3>Dashboard Ribas Capital</h3>
+                    
+                    <div class="patrimonio-grid">
+                        <div class="patrimonio-total-container">
+                            <span>Patrimônio Total Atualizado</span>
+                            <h2 id="valor-patrimonio-total">R$ 0,00</h2>
+                        </div>
+
+                        <div class="patrimonio-total-container ganho-card">
+                            <span>
+                                Ganho Acumulado
+                                <div class="info-icon" title="Cálculo: (Vendas - Compras) + Proventos + Patrimônio Atual = Ganho Acumulado">?</div>
+                            </span>
+                            <h2 id="valor-ganho-acumulado">R$ 0,00</h2>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid" style="margin: 20px 0;">
+                        <div class="stat-card"><span>RENDA FIXA</span><strong id="perc-rf">--%</strong></div><div class="stat-card"><span>IMÓVEIS/FIIs</span><strong id="perc-fii">--%</strong></div><div class="stat-card"><span>EMPRESAS BR</span><strong id="perc-acoes">--%</strong></div><div class="stat-card"><span>EMPRESAS EUA</span><strong id="perc-internacional">--%</strong></div><div class="stat-card"><span>CRIPTO</span><strong id="perc-cripto">--%</strong></div>
+                    </div>
+
+                    <p id="nota-dolar" style="font-size: 0.8rem; color: #64748b; margin-bottom: 15px; font-style: italic;"></p>
+
+                    <h4>Ativos em Tempo Real</h4>
+                    <div style="overflow-x: auto;">
+                        <table class="tabela-estilizada">
+                            <thead>
+                                <tr>
+                                    <th>Classe</th>
+                                    <th>Ativo</th>
+                                    <th>Saldo Atualizado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="corpo-tabela-carteira"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </article>
         </div>
     </div>
 </div>
 
-<footer class="footer-site">
+<footer class="footer-site" style="margin-top: 50px; padding: 20px; text-align: center; color: #94a3b8; font-size: 0.9rem;">
     <p>&copy; 2026 Ribas Capital. Todos os direitos reservados.</p>
 </footer>
 
