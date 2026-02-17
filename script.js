@@ -131,7 +131,7 @@ function atualizarCard(id, parcial, total) {
     }
 }
 
-// --- NAVEGAÇÃO PRINCIPAL ---
+// --- NAVEGAÇÃO ---
 window.switchTab = function(event, tabId) {
     document.querySelectorAll(".tab-content").forEach(c => { c.classList.remove("active"); c.style.display = "none"; });
     document.querySelectorAll(".tab-link").forEach(l => l.classList.remove("active"));
@@ -141,29 +141,25 @@ window.switchTab = function(event, tabId) {
     if(tabId === 'tab-sobre') atualizarCarteiraReal();
 };
 
-// --- NAVEGAÇÃO EDUCAÇÃO (Introdução, RF, RV) ---
-window.abrirCategoria = function(catId, btn) {
-    document.querySelectorAll('.pagina-artigo').forEach(art => art.classList.remove('active'));
-    btn.parentElement.querySelectorAll('.btn-tema').forEach(b => b.classList.remove('active'));
-    document.getElementById(catId).classList.add('active');
-    btn.classList.add('active');
-};
-
-// --- NAVEGAÇÃO RENDA FIXA (Tesouro vs CDB) ---
-window.abrirSubRenda = function(id, btn) {
-    document.querySelectorAll('.sub-renda-content').forEach(el => el.style.display = 'none');
-    btn.parentElement.querySelectorAll('.btn-tema').forEach(b => b.classList.remove('active'));
-    document.getElementById(id).style.display = 'block';
-    btn.classList.add('active');
-};
-
-// --- NAVEGAÇÃO SOBRE (Empresa vs Carteira) ---
 window.abrirSubSobre = function(subId, btn) {
     document.querySelectorAll('.sub-sobre-content').forEach(s => s.style.display = 'none');
     btn.parentElement.querySelectorAll('.btn-tema').forEach(b => b.classList.remove('active'));
     document.getElementById(subId).style.display = 'block';
     btn.classList.add('active');
     if(subId === 'sobre-carteira') atualizarCarteiraReal();
+};
+
+// --- FUNÇÃO PARA AS SUB-ABAS DE EDUCAÇÃO (CDB, TESOURO, ETC) ---
+window.abrirSubConteudo = function(subId, btn) {
+    const container = btn.closest('.artigo-completo');
+    container.querySelectorAll('.sub-artigo-content').forEach(div => {
+        div.style.display = 'none';
+    });
+    btn.parentElement.querySelectorAll('.btn-tema').forEach(b => {
+        b.classList.remove('active');
+    });
+    document.getElementById(subId).style.display = 'block';
+    btn.classList.add('active');
 };
 
 // --- SIMULADOR ---
@@ -218,3 +214,14 @@ window.calcular = function() {
 
 window.exportarPDF = () => { html2pdf().from(document.getElementById('area-simulador')).save(); };
 window.limpar = () => { location.reload(); };
+
+// --- NOVA FUNÇÃO PARA ABRIR CATEGORIAS DE EDUCAÇÃO ---
+window.abrirCategoria = function(catId, btn) {
+    document.querySelectorAll('.pagina-artigo').forEach(art => art.classList.remove('active'));
+    document.querySelectorAll('#tab-educacao .btn-tema').forEach(b => {
+        // Apenas remove active dos botões da categoria principal, não das sub-abas
+        if(b.parentElement.className === 'menu-educacao') b.classList.remove('active');
+    });
+    document.getElementById(catId).classList.add('active');
+    btn.classList.add('active');
+};
