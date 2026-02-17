@@ -20,8 +20,6 @@ const meusAtivos = {
     },
     imoveisFisicos: 28637.25, 
     rendaFixa: 1000.00,
-    // --- INSIRA SEU GANHO ACUMULADO CALCULADO MANUALMENTE AQUI ---
-    // Fórmula: (Vendas - Compras) + Proventos + Patrimônio Atual
     ganhoManual: 15450.75 
 };
 
@@ -39,7 +37,6 @@ async function atualizarCarteiraReal() {
         const usdData = data.results.find(res => res.symbol === "USDBRL");
         const cotacaoDolar = usdData ? usdData.regularMarketPrice : 5.22; 
 
-        // Atualizar nota informativa
         const notaDolar = document.getElementById('nota-dolar');
         if(notaDolar) {
             notaDolar.innerText = `* Câmbio: US$ 1 = R$ ${cotacaoDolar.toFixed(2)} | BTC: R$ ${COTACAO_BITCOIN_BRL.toLocaleString('pt-BR')}`;
@@ -48,7 +45,6 @@ async function atualizarCarteiraReal() {
         let totalAcoes = 0, totalFiis = 0, totalInternacional = 0, totalCripto = 0, totalRF = meusAtivos.rendaFixa;
         let listaAtivos = [];
 
-        // 1. Processar Ativos da API
         data.results.forEach(ativo => {
             const ticker = ativo.symbol;
             const preco = ativo.regularMarketPrice || 0;
@@ -76,7 +72,6 @@ async function atualizarCarteiraReal() {
             }
         });
 
-        // 2. Adicionar Ativos Manuais na Lista
         const valorBTC = meusAtivos.cripto.BTC * COTACAO_BITCOIN_BRL;
         totalCripto = valorBTC;
         listaAtivos.push({ classe: "Cripto", ticker: "BITCOIN", valorBRL: valorBTC });
@@ -86,10 +81,8 @@ async function atualizarCarteiraReal() {
 
         listaAtivos.push({ classe: "Renda Fixa", ticker: "IPCA", valorBRL: meusAtivos.rendaFixa });
 
-        // --- ORDENAÇÃO: DA MAIOR POSIÇÃO PARA A MENOR ---
         listaAtivos.sort((a, b) => b.valorBRL - a.valorBRL);
 
-        // 3. Renderizar Tabela Ordenada
         const corpoTabela = document.getElementById('corpo-tabela-carteira');
         if (corpoTabela) {
             corpoTabela.innerHTML = "";
@@ -103,7 +96,6 @@ async function atualizarCarteiraReal() {
             });
         }
 
-        // --- ATUALIZAR PATRIMÔNIO TOTAL E GANHO ACUMULADO ---
         const totalGeral = totalAcoes + totalFiis + totalInternacional + totalCripto + totalRF;
         
         const totalEl = document.getElementById('valor-patrimonio-total');
@@ -112,7 +104,6 @@ async function atualizarCarteiraReal() {
         const ganhoEl = document.getElementById('valor-ganho-acumulado');
         if(ganhoEl) ganhoEl.innerText = meusAtivos.ganhoManual.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-        // --- ATUALIZAR PERCENTUAIS (COLADOS NO %) ---
         atualizarCard('perc-rf', totalRF, totalGeral);
         atualizarCard('perc-fii', totalFiis, totalGeral);
         atualizarCard('perc-acoes', totalAcoes, totalGeral);
@@ -131,35 +122,75 @@ function atualizarCard(id, parcial, total) {
     }
 }
 
-// --- NAVEGAÇÃO ---
+// --- NAVEGAÇÃO PRINCIPAL ---
 window.switchTab = function(event, tabId) {
-    document.querySelectorAll(".tab-content").forEach(c => { c.classList.remove("active"); c.style.display = "none"; });
+    document.querySelectorAll(".tab-content").forEach(c => { 
+        c.classList.remove("active"); 
+        c.style.display = "none"; 
+    });
     document.querySelectorAll(".tab-link").forEach(l => l.classList.remove("active"));
+    
     const activeTab = document.getElementById(tabId);
-    if (activeTab) { activeTab.classList.add("active"); activeTab.style.display = "block"; }
+    if (activeTab) { 
+        activeTab.classList.add("active"); 
+        activeTab.style.display = "block"; 
+    }
     if(event) event.currentTarget.classList.add("active");
-    if(tabId === 'tab-sobre') atualizarCarteiraReal();
+
+    // CORREÇÃO AQUI: Se entrar na aba 'Sobre' ou se a subaba da carteira estiver aberta, ele atualiza
+    if(tabId === 'tab-sobre' || document.getElementById('sobre-carteira')?.style.display === 'block') {
+        atualizarCarteiraReal();
+    }
 };
 
-window.abrirSubSobre = function(subId, btn) {
-    document.querySelectorAll('.sub-sobre-content').forEach(s => s.style.display = 'none');
+// --- NAVEGAÇÃO DE CATEGORIAS (Educação) ---
+window.abrirCategoria = function(catId, btn) {
+    document.querySelectorAll('.pagina-artigo').forEach(art => art.classList.remove('active'));
+    // Remove active apenas dos botões do menu principal da aba educação
     btn.parentElement.querySelectorAll('.btn-tema').forEach(b => b.classList.remove('active'));
-    document.getElementById(subId).style.display = 'block';
+    
+    document.getElementById(catId).classList.add('active');
     btn.classList.add('active');
-    if(subId === 'sobre-carteira') atualizarCarteiraReal();
 };
 
-// --- FUNÇÃO PARA AS SUB-ABAS DE EDUCAÇÃO (CDB, TESOURO, ETC) ---
+// --- CORREÇÃO: FUNÇÃO DE SUB-ABAS (Educação e Renda Extra) ---
 window.abrirSubConteudo = function(subId, btn) {
-    const container = btn.closest('.artigo-completo');
-    container.querySelectorAll('.sub-artigo-content').forEach(div => {
+    // 1. Identifica o container principal (seja da Educação, Renda Extra ou Sobre)
+    const containerPai = btn.closest('.artigo-completo') || 
+                         btn.closest('.container-extra') || 
+                         btn.closest('#tab-sobre');
+    
+    // 2. Esconde TODOS os conteúdos internos possíveis para evitar sobreposição
+    const seletoresGerais = '.sub-artigo-content, .sub-renda, .sub-sobre-content, .pagina-artigo';
+    const conteudos = containerPai.querySelectorAll(seletoresGerais);
+    
+    conteudos.forEach(div => {
         div.style.display = 'none';
+        div.classList.remove('active');
     });
-    btn.parentElement.querySelectorAll('.btn-tema').forEach(b => {
-        b.classList.remove('active');
-    });
-    document.getElementById(subId).style.display = 'block';
+
+    // 3. Remove o 'active' dos botões do menu onde o clique aconteceu
+    btn.parentElement.querySelectorAll('.btn-tema, .tab-link').forEach(b => b.classList.remove('active'));
+
+    // 4. Mostra o conteúdo alvo
+    const alvo = document.getElementById(subId);
+    if(alvo) {
+        alvo.style.display = 'block';
+        alvo.classList.add('active');
+    }
+    
+    // 5. Marca o botão como ativo
     btn.classList.add('active');
+
+    // 6. Se for a carteira, atualiza os dados da API
+    if(subId === 'sobre-carteira' || subId === 'tab-carteira') {
+        atualizarCarteiraReal();
+    }
+};
+
+// Mantemos essa "ponte" para garantir que botões antigos funcionem
+window.abrirSubSobre = function(subId, btn) {
+    abrirSubConteudo(subId, btn);
 };
 
 // --- SIMULADOR ---
@@ -215,13 +246,18 @@ window.calcular = function() {
 window.exportarPDF = () => { html2pdf().from(document.getElementById('area-simulador')).save(); };
 window.limpar = () => { location.reload(); };
 
-// --- NOVA FUNÇÃO PARA ABRIR CATEGORIAS DE EDUCAÇÃO ---
-window.abrirCategoria = function(catId, btn) {
-    document.querySelectorAll('.pagina-artigo').forEach(art => art.classList.remove('active'));
-    document.querySelectorAll('#tab-educacao .btn-tema').forEach(b => {
-        // Apenas remove active dos botões da categoria principal, não das sub-abas
-        if(b.parentElement.className === 'menu-educacao') b.classList.remove('active');
-    });
-    document.getElementById(catId).classList.add('active');
-    btn.classList.add('active');
+// Carrega os dados assim que a página termina de ler o script
+document.addEventListener('DOMContentLoaded', () => {
+    atualizarCarteiraReal();
+});
+
+// Direciona as chamadas antigas de 'abrirSubSobre' para a nova função unificada
+window.abrirSubSobre = function(subId, btn) {
+    // Chama a função nova que já corrigimos
+    abrirSubConteudo(subId, btn);
+    
+    // Se for a sub-aba da carteira, aproveita para atualizar os dados da API
+    if(subId === 'sobre-carteira' || subId === 'tab-carteira') {
+        atualizarCarteiraReal();
+    }
 };
