@@ -131,7 +131,7 @@ function atualizarCard(id, parcial, total) {
     }
 }
 
-// --- NAVEGAÇÃO ---
+// --- NAVEGAÇÃO PRINCIPAL ---
 window.switchTab = function(event, tabId) {
     document.querySelectorAll(".tab-content").forEach(c => { c.classList.remove("active"); c.style.display = "none"; });
     document.querySelectorAll(".tab-link").forEach(l => l.classList.remove("active"));
@@ -141,6 +141,23 @@ window.switchTab = function(event, tabId) {
     if(tabId === 'tab-sobre') atualizarCarteiraReal();
 };
 
+// --- NAVEGAÇÃO EDUCAÇÃO (Introdução, RF, RV) ---
+window.abrirCategoria = function(catId, btn) {
+    document.querySelectorAll('.pagina-artigo').forEach(art => art.classList.remove('active'));
+    btn.parentElement.querySelectorAll('.btn-tema').forEach(b => b.classList.remove('active'));
+    document.getElementById(catId).classList.add('active');
+    btn.classList.add('active');
+};
+
+// --- NAVEGAÇÃO RENDA FIXA (Tesouro vs CDB) ---
+window.abrirSubRenda = function(id, btn) {
+    document.querySelectorAll('.sub-renda-content').forEach(el => el.style.display = 'none');
+    btn.parentElement.querySelectorAll('.btn-tema').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).style.display = 'block';
+    btn.classList.add('active');
+};
+
+// --- NAVEGAÇÃO SOBRE (Empresa vs Carteira) ---
 window.abrirSubSobre = function(subId, btn) {
     document.querySelectorAll('.sub-sobre-content').forEach(s => s.style.display = 'none');
     btn.parentElement.querySelectorAll('.btn-tema').forEach(b => b.classList.remove('active'));

@@ -169,10 +169,119 @@
             <button class="btn-tema" onclick="abrirCategoria('cat-rendavariavel', this)">Renda Variável</button>
         </div>
         <div id="area-leitura">
-            <article id="pg-intro" class="pagina-artigo active">
+            <article id="cat-intro" class="pagina-artigo active">
                 <div class="artigo-completo">
-                    <h2>O que é Investir?</h2>
-                    <p>Investir é o ato de aplicar recursos com a expectativa de obter um retorno futuro superior ao valor aplicado.</p>
+                    <h2>Introdução aos Investimentos</h2>
+                    <section>
+                        <h3>O que é Renda Fixa</h3>
+                        <p>Renda fixa é um tipo de investimento em que as regras de remuneração são definidas no momento da aplicação. Ou seja, você já sabe como será calculado o seu rendimento. Isso não significa que você sabe exatamente quanto vai ganhar em todos os casos, mas conhece a lógica do rendimento.</p>
+                        <p><strong>Exemplos:</strong> Tesouro Direto, CDB (Certificado de Depósito Bancário), LCI, LCA e Debêntures.</p>
+                        <h4>Tipos de rentabilidade:</h4>
+                        <ul>
+                            <li><strong>Prefixada:</strong> você sabe a taxa exata (ex: 10% ao ano).</li>
+                            <li><strong>Pós-fixada:</strong> atrelada a um índice (ex: CDI ou Selic).</li>
+                            <li><strong>Híbrida:</strong> mistura taxa fixa + inflação (ex: IPCA + 5%).</li>
+                        </ul>
+                        <p><strong>Características:</strong> Maior previsibilidade, menor volatilidade e geralmente menor risco. Indicado para reserva de emergência e objetivos de curto/médio prazo.</p>
+                    </section>
+                    <hr style="margin: 30px 0; border: 0; border-top: 1px solid #e2e8f0;">
+                    <section>
+                        <h3>O que é Renda Variável</h3>
+                        <p>Na renda variável, não é possível saber previamente quanto você vai ganhar ou perder, pois o valor do investimento oscila conforme o mercado.</p>
+                        <p><strong>Exemplos:</strong> Ações (negociadas na B3), Fundos imobiliários (FIIs), ETFs e Criptomoedas.</p>
+                        <p><strong>Características:</strong> Maior potencial de retorno, oscilações frequentes (volatilidade) e maior risco no curto prazo. Indicado para objetivos de longo prazo.</p>
+                        <p>Aqui, o retorno depende de fatores como resultados das empresas, economia, juros, cenário político e a lei da oferta e demanda.</p>
+                    </section>
+                    <section style="margin-top: 30px;">
+                        <h3>Principais Diferenças</h3>
+                        <table class="tabela-estilizada">
+                            <thead>
+                                <tr>
+                                    <th>Característica</th>
+                                    <th>Renda Fixa</th>
+                                    <th>Renda Variável</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Rendimento</td>
+                                    <td>Regras definidas</td>
+                                    <td>Retorno imprevisível</td>
+                                </tr>
+                                <tr>
+                                    <td>Risco</td>
+                                    <td>Menor</td>
+                                    <td>Maior</td>
+                                </tr>
+                                <tr>
+                                    <td>Oscilação</td>
+                                    <td>Baixa</td>
+                                    <td>Alta</td>
+                                </tr>
+                                <tr>
+                                    <td>Objetivo</td>
+                                    <td>Segurança</td>
+                                    <td>Crescimento</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+                    <section style="margin-top: 40px;">
+                        <h3>Por que é importante diversificar?</h3>
+                        <p>Diversificação significa não colocar todo o seu dinheiro em um único tipo de investimento. Como cada classe de ativo se comporta de maneira diferente, essa estratégia protege seu patrimônio.</p>
+                        <ul>
+                            <li>Se a bolsa cai, a renda fixa pode estar rendendo bem (especialmente com juros altos).</li>
+                            <li>Se os juros caem, ações e FIIs tendem a se valorizar mais.</li>
+                        </ul>
+                        <h4>Redução de risco</h4>
+                        <p>Ao diversificar, você reduz o impacto de perdas em um único ativo, diminui a volatilidade da carteira e aumenta a consistência dos resultados no longo prazo. É a famosa estratégia de não colocar todos os ovos na mesma cesta.</p>
+                    </section>
+                    <section style="background: #f8fafc; padding: 20px; border-radius: 12px; margin-top: 30px;">
+                        <h3>Exemplo Prático</h3>
+                        <p>Uma carteira equilibrada deve conter uma parte em renda fixa (para segurança e estabilidade) e uma parte em renda variável (para crescimento e valorização). O percentual ideal depende do seu perfil de risco, objetivos e prazo.</p>
+                    </section>
+                    <div style="margin-top: 40px; border-top: 2px solid #00b386; padding-top: 20px;">
+                        <p><strong>Conclusão:</strong> Renda fixa foca em previsibilidade; Renda variável foca em potencial. A diversificação é o que equilibra ambos.</p>
+                    </div>
+                </div>
+            </article>
+
+            <article id="cat-rendafixa" class="pagina-artigo">
+                <div class="artigo-completo">
+                    <h2 style="color: #00b386;">Renda Fixa</h2>
+                    <div class="menu-educacao" style="justify-content: flex-start; margin-bottom: 25px; border-bottom: 1px solid #e2e8f0; padding-bottom: 15px;">
+                        <button class="btn-tema active" onclick="abrirSubRenda('rf-tesouro', this)">Tesouro Direto</button>
+                        <button class="btn-tema" onclick="abrirSubRenda('rf-cdb', this)">CDB</button>
+                    </div>
+                    <div id="rf-tesouro" class="sub-renda-content">
+                        <h3>Tesouro Direto</h3>
+                        <p>O Tesouro Direto é um programa do Tesouro Nacional que permite que pessoas físicas comprem títulos públicos federais. Na prática, você empresta dinheiro para o Governo Brasileiro em troca de juros.</p>
+                        <h4>Principais Títulos:</h4>
+                        <ul>
+                            <li><strong>Tesouro Selic:</strong> Ideal para reserva de emergência. Rende conforme a taxa básica de juros e possui liquidez diária.</li>
+                            <li><strong>Tesouro IPCA+:</strong> Protege contra a inflação. Garante um ganho real (ex: IPCA + 6% ao ano).</li>
+                            <li><strong>Tesouro Prefixado:</strong> Você sabe exatamente o valor que receberá no vencimento, independente do que aconteça com a economia.</li>
+                        </ul>
+                        <p><strong>Segurança:</strong> É considerado o investimento de menor risco do país, pois é garantido pelo Estado.</p>
+                    </div>
+                    <div id="rf-cdb" class="sub-renda-content" style="display:none;">
+                        <h3>CDB (Certificado de Depósito Bancário)</h3>
+                        <p>Ao investir em um CDB, você está emprestando dinheiro para um banco. O banco usa esse recurso para emprestar a outros clientes e, em troca, te paga uma taxa de juros.</p>
+                        <h4>Tipos de CDB:</h4>
+                        <ul>
+                            <li><strong>CDB Pós-fixado:</strong> Geralmente rende um percentual do CDI (ex: 110% do CDI).</li>
+                            <li><strong>CDB Prefixado:</strong> Taxa fixa definida no momento da compra (ex: 12% ao ano).</li>
+                            <li><strong>CDB Híbrido:</strong> Parte fixa mais a variação do IPCA.</li>
+                        </ul>
+                        <p><strong>Segurança:</strong> Os CDBs contam com a proteção do FGC (Fundo Garantidor de Créditos) para valores de até R$ 250.000 por CPF e por instituição financeira.</p>
+                    </div>
+                </div>
+            </article>
+
+            <article id="cat-rendavariavel" class="pagina-artigo">
+                <div class="artigo-completo">
+                    <h2>Renda Variável</h2>
+                    <p>Conteúdo sobre Renda Variável em desenvolvimento...</p>
                 </div>
             </article>
         </div>
