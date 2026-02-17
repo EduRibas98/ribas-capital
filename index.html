@@ -163,19 +163,22 @@
 <div id="tab-educacao" class="tab-content">
     <div class="container-extra">
         <h2 style="color: #00b386; margin-bottom: 30px;">Portal de Educação Financeira</h2>
+        
         <div class="menu-educacao">
             <button class="btn-tema active" onclick="abrirCategoria('cat-intro', this)">Introdução</button>
             <button class="btn-tema" onclick="abrirCategoria('cat-rendafixa', this)">Renda Fixa</button>
             <button class="btn-tema" onclick="abrirCategoria('cat-rendavariavel', this)">Renda Variável</button>
         </div>
+
         <div id="area-leitura">
             <article id="cat-intro" class="pagina-artigo active">
                 <div class="artigo-completo">
-                    <h2>Introdução aos Investimentos</h2>
+                    <h2 style="color: #00b386;">Introdução aos Investimentos</h2>
                     <section>
                         <h3>O que é Renda Fixa</h3>
                         <p>Renda fixa é um tipo de investimento em que as regras de remuneração são definidas no momento da aplicação. Ou seja, você já sabe como será calculado o seu rendimento. Isso não significa que você sabe exatamente quanto vai ganhar em todos os casos, mas conhece a lógica do rendimento.</p>
                         <p><strong>Exemplos:</strong> Tesouro Direto, CDB (Certificado de Depósito Bancário), LCI, LCA e Debêntures.</p>
+                        
                         <h4>Tipos de rentabilidade:</h4>
                         <ul>
                             <li><strong>Prefixada:</strong> você sabe a taxa exata (ex: 10% ao ano).</li>
@@ -184,7 +187,9 @@
                         </ul>
                         <p><strong>Características:</strong> Maior previsibilidade, menor volatilidade e geralmente menor risco. Indicado para reserva de emergência e objetivos de curto/médio prazo.</p>
                     </section>
+
                     <hr style="margin: 30px 0; border: 0; border-top: 1px solid #e2e8f0;">
+
                     <section>
                         <h3>O que é Renda Variável</h3>
                         <p>Na renda variável, não é possível saber previamente quanto você vai ganhar ou perder, pois o valor do investimento oscila conforme o mercado.</p>
@@ -192,40 +197,28 @@
                         <p><strong>Características:</strong> Maior potencial de retorno, oscilações frequentes (volatilidade) e maior risco no curto prazo. Indicado para objetivos de longo prazo.</p>
                         <p>Aqui, o retorno depende de fatores como resultados das empresas, economia, juros, cenário político e a lei da oferta e demanda.</p>
                     </section>
+
                     <section style="margin-top: 30px;">
                         <h3>Principais Diferenças</h3>
-                        <table class="tabela-estilizada">
-                            <thead>
-                                <tr>
-                                    <th>Característica</th>
-                                    <th>Renda Fixa</th>
-                                    <th>Renda Variável</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Rendimento</td>
-                                    <td>Regras definidas</td>
-                                    <td>Retorno imprevisível</td>
-                                </tr>
-                                <tr>
-                                    <td>Risco</td>
-                                    <td>Menor</td>
-                                    <td>Maior</td>
-                                </tr>
-                                <tr>
-                                    <td>Oscilação</td>
-                                    <td>Baixa</td>
-                                    <td>Alta</td>
-                                </tr>
-                                <tr>
-                                    <td>Objetivo</td>
-                                    <td>Segurança</td>
-                                    <td>Crescimento</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div style="overflow-x: auto;">
+                            <table class="tabela-estilizada">
+                                <thead>
+                                    <tr>
+                                        <th>Característica</th>
+                                        <th>Renda Fixa</th>
+                                        <th>Renda Variável</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Rendimento</td><td>Regras definidas</td><td>Retorno imprevisível</td></tr>
+                                    <tr><td>Risco</td><td>Menor</td><td>Maior</td></tr>
+                                    <tr><td>Oscilação</td><td>Baixa</td><td>Alta</td></tr>
+                                    <tr><td>Objetivo</td><td>Segurança</td><td>Crescimento</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </section>
+
                     <section style="margin-top: 40px;">
                         <h3>Por que é importante diversificar?</h3>
                         <p>Diversificação significa não colocar todo o seu dinheiro em um único tipo de investimento. Como cada classe de ativo se comporta de maneira diferente, essa estratégia protege seu patrimônio.</p>
@@ -236,10 +229,12 @@
                         <h4>Redução de risco</h4>
                         <p>Ao diversificar, você reduz o impacto de perdas em um único ativo, diminui a volatilidade da carteira e aumenta a consistência dos resultados no longo prazo. É a famosa estratégia de não colocar todos os ovos na mesma cesta.</p>
                     </section>
-                    <section style="background: #f8fafc; padding: 20px; border-radius: 12px; margin-top: 30px;">
+
+                    <section style="background: #f8fafc; padding: 20px; border-radius: 12px; margin-top: 30px; border-left: 4px solid #00b386;">
                         <h3>Exemplo Prático</h3>
                         <p>Uma carteira equilibrada deve conter uma parte em renda fixa (para segurança e estabilidade) e uma parte em renda variável (para crescimento e valorização). O percentual ideal depende do seu perfil de risco, objetivos e prazo.</p>
                     </section>
+
                     <div style="margin-top: 40px; border-top: 2px solid #00b386; padding-top: 20px;">
                         <p><strong>Conclusão:</strong> Renda fixa foca em previsibilidade; Renda variável foca em potencial. A diversificação é o que equilibra ambos.</p>
                     </div>
@@ -248,51 +243,353 @@
 
             <article id="cat-rendafixa" class="pagina-artigo">
                 <div class="artigo-completo">
-                    <h2 style="color: #00b386;">Renda Fixa</h2>
-                    <div class="menu-educacao" style="justify-content: flex-start; margin-bottom: 25px; border-bottom: 1px solid #e2e8f0; padding-bottom: 15px;">
-                        <button class="btn-tema active" onclick="abrirSubRenda('rf-tesouro', this)">Tesouro Direto</button>
-                        <button class="btn-tema" onclick="abrirSubRenda('rf-cdb', this)">CDB</button>
+                    <h2 style="color: #00b386; margin-bottom: 20px;">Explorando a Renda Fixa</h2>
+                    
+                    <div class="menu-educacao" style="justify-content: flex-start; margin-bottom: 25px; background: #f1f5f9; padding: 10px; border-radius: 12px;">
+                        <button class="btn-tema active" style="font-size: 14px;" onclick="abrirSubConteudo('rf-cdb', this)">CDB</button>
+                        <button class="btn-tema" style="font-size: 14px;" onclick="abrirSubConteudo('rf-tesouro', this)">Tesouro Direto</button>
                     </div>
-                    <div id="rf-tesouro" class="sub-renda-content">
-                        <h3>Tesouro Direto</h3>
-                        <p>O Tesouro Direto é um programa do Tesouro Nacional que permite que pessoas físicas comprem títulos públicos federais. Na prática, você empresta dinheiro para o Governo Brasileiro em troca de juros.</p>
-                        <h4>Principais Títulos:</h4>
-                        <ul>
-                            <li><strong>Tesouro Selic:</strong> Ideal para reserva de emergência. Rende conforme a taxa básica de juros e possui liquidez diária.</li>
-                            <li><strong>Tesouro IPCA+:</strong> Protege contra a inflação. Garante um ganho real (ex: IPCA + 6% ao ano).</li>
-                            <li><strong>Tesouro Prefixado:</strong> Você sabe exatamente o valor que receberá no vencimento, independente do que aconteça com a economia.</li>
-                        </ul>
-                        <p><strong>Segurança:</strong> É considerado o investimento de menor risco do país, pois é garantido pelo Estado.</p>
-                    </div>
-                    <div id="rf-cdb" class="sub-renda-content" style="display:none;">
-                        <h3>CDB (Certificado de Depósito Bancário)</h3>
-                        <p>Ao investir em um CDB, você está emprestando dinheiro para um banco. O banco usa esse recurso para emprestar a outros clientes e, em troca, te paga uma taxa de juros.</p>
-                        <h4>Tipos de CDB:</h4>
-                        <ul>
-                            <li><strong>CDB Pós-fixado:</strong> Geralmente rende um percentual do CDI (ex: 110% do CDI).</li>
-                            <li><strong>CDB Prefixado:</strong> Taxa fixa definida no momento da compra (ex: 12% ao ano).</li>
-                            <li><strong>CDB Híbrido:</strong> Parte fixa mais a variação do IPCA.</li>
-                        </ul>
-                        <p><strong>Segurança:</strong> Os CDBs contam com a proteção do FGC (Fundo Garantidor de Créditos) para valores de até R$ 250.000 por CPF e por instituição financeira.</p>
-                    </div>
+
+                    <div id="rf-cdb" class="sub-artigo-content" style="display:none;">
+    <div class="artigo-completo">
+        <h2 style="color: #00b386;">O que é CDB</h2>
+        <p>O CDB (Certificado de Depósito Bancário) é um título de renda fixa emitido por bancos com o objetivo de captar recursos. Quando o investidor aplica em um CDB, ele está emprestando dinheiro ao banco. Em troca, o banco paga juros sobre o valor investido por um determinado período. Os bancos utilizam esses recursos para realizar operações de crédito, como empréstimos e financiamentos.</p>
+
+        <h3>Como o investidor pode investir em CDB</h3>
+        <p>O processo é simples:</p>
+        <ul style="text-align: left; display: inline-block; width: 100%;">
+            <li>Abrir conta em um banco ou corretora.</li>
+            <li>Transferir recursos para a instituição.</li>
+            <li>Acessar a plataforma de investimentos.</li>
+            <li>Escolher o CDB disponível (observando taxa, prazo e liquidez).</li>
+            <li>Confirmar a aplicação.</li>
+        </ul>
+        <p>Os valores mínimos variam conforme o banco, podendo começar a partir de R$ 100 ou menos.</p>
+        <p>O investidor pode:</p>
+        <ul>
+            <li>Manter o CDB até o vencimento e receber a rentabilidade contratada.</li>
+            <li>Resgatar antes do vencimento, se o título permitir liquidez antecipada.</li>
+        </ul>
+
+        <h3>Tipos de CDB</h3>
+        <p>Os CDBs podem ser classificados de acordo com a forma de rentabilidade.</p>
+
+        
+
+        <h4>CDB Pós-fixado</h4>
+        <p>A rentabilidade está atrelada a um percentual do CDI. O CDI acompanha de perto a Taxa Selic.</p>
+        <p><strong>Exemplo:</strong> Um CDB que paga 110% do CDI renderá 110% da variação dessa taxa no período.</p>
+        <p><strong>Características:</strong> Rentabilidade acompanha os juros da economia. Indicado para cenários de juros altos. Pode ter liquidez diária.</p>
+
+        <h4>CDB Prefixado</h4>
+        <p>A taxa de juros é definida no momento da aplicação.</p>
+        <p><strong>Exemplo:</strong> CDB pagando 12% ao ano. Se mantido até o vencimento, o investidor receberá exatamente essa taxa.</p>
+        <p><strong>Características:</strong> Permite travar uma taxa. Pode perder atratividade se os juros subirem após a aplicação. Indicado quando se acredita na queda dos juros.</p>
+
+        <h4>CDB Híbrido</h4>
+        <p>Paga inflação (IPCA) mais uma taxa fixa. O IPCA é calculado pelo IBGE.</p>
+        <p><strong>Exemplo:</strong> IPCA + 6%.</p>
+        <p><strong>Características:</strong> Protege o poder de compra. Indicado para médio e longo prazo.</p>
+
+        <h3>Garantia e segurança</h3>
+        <p>Os CDBs contam com a proteção do Fundo Garantidor de Créditos (FGC). A cobertura é de:</p>
+        <ul>
+            <li>Até R$ 250.000 por CPF por instituição financeira.</li>
+            <li>Limitado a R$ 1 milhão a cada período de quatro anos.</li>
+        </ul>
+        <p>Isso significa que, caso o banco emissor quebre, o investidor pode ser ressarcido dentro desses limites.</p>
+
+        <h3>Principais riscos</h3>
+        <p><strong>Risco de crédito:</strong> É o risco de o banco emissor não conseguir pagar o investidor. Esse risco varia conforme o porte e a saúde financeira do banco. Bancos menores costumam oferecer taxas maiores justamente por apresentarem maior risco de crédito.</p>
+        <p><strong>Risco de liquidez:</strong> Alguns CDBs não permitem resgate antes do vencimento. Nesse caso, o investidor precisa manter o dinheiro aplicado até o prazo final.</p>
+        <p><strong>Risco de mercado:</strong> Nos CDBs prefixados e híbridos, se houver resgate antecipado (quando permitido), pode haver impacto na rentabilidade, dependendo das regras do contrato.</p>
+
+        <h3>Tributação</h3>
+        <p>O CDB segue a mesma tabela regressiva de Imposto de Renda aplicada a outros investimentos de renda fixa:</p>
+        
+        
+
+        <table class="tabela-estilizada">
+            <thead>
+                <tr>
+                    <th>Prazo da Aplicação</th>
+                    <th>Alíquota de IR</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Até 180 dias</td><td>22,5%</td></tr>
+                <tr><td>181 a 360 dias</td><td>20%</td></tr>
+                <tr><td>361 a 720 dias</td><td>17,5%</td></tr>
+                <tr><td>Acima de 720 dias</td><td>15%</td></tr>
+            </tbody>
+        </table>
+        <p><small><strong>Observações:</strong> O IOF incide apenas se o resgate ocorrer em menos de 30 dias. O imposto é cobrado somente sobre o rendimento.</small></p>
+
+        <h3>Indicado para...</h3>
+        <table class="tabela-estilizada">
+            <thead>
+                <tr>
+                    <th>Tipo de CDB</th>
+                    <th>Melhor para</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Pós-fixado (CDI)</td><td>Reserva de emergência e cenários de juros altos</td></tr>
+                <tr><td>Prefixado</td><td>Travar taxas elevadas e planejamento de médio prazo</td></tr>
+                <tr><td>Híbrido (IPCA+)</td><td>Proteção contra inflação e longo prazo</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Conclusão</h3>
+        <p>O CDB é um investimento de renda fixa simples e acessível, indicado tanto para iniciantes quanto para investidores experientes. Sua principal vantagem é a possibilidade de obter rentabilidade superior ao Tesouro Selic, especialmente em bancos médios e pequenos, mantendo a proteção do FGC dentro dos limites estabelecidos.</p>
+        <p>A escolha do CDB ideal deve considerar: A taxa oferecida, o prazo, a liquidez, o risco da instituição emissora e o objetivo financeiro do investidor.</p>
+    </div>
+</div>
+
+                    <div id="rf-tesouro" class="sub-artigo-content" style="display:none;">
+    <div class="artigo-completo">
+        <h2 style="color: #00b386;">O que é o Tesouro Direto</h2>
+        <p>O Tesouro Direto é um programa do Governo Federal, criado em parceria com a B3, que permite que pessoas físicas comprem títulos públicos federais pela internet. Ao investir no Tesouro Direto, o investidor está emprestando dinheiro ao Governo Federal, que se compromete a devolver o valor aplicado acrescido de juros em uma data futura. É considerado o investimento de menor risco de crédito da economia brasileira, pois é garantido pelo próprio Tesouro Nacional.</p>
+
+        <h3>Como o investidor pode investir</h3>
+        <p>O processo é simples:</p>
+        <ul>
+            <li>Abrir conta em uma corretora ou banco habilitado.</li>
+            <li>Transferir recursos para a instituição.</li>
+            <li>Acessar a plataforma e escolher o título.</li>
+            <li>Aplicar valores a partir de aproximadamente R$ 30.</li>
+            <li>Acompanhar o investimento até o vencimento ou vender antes, se necessário.</li>
+        </ul>
+        <p>O Tesouro Nacional recompra os títulos diariamente em dias úteis, garantindo liquidez.</p>
+
+        <h3>Tipos de Tesouro Direto</h3>
+        
+        <h4>Tesouro Selic</h4>
+        <p>Atrelado à Taxa Selic, é um título pós-fixado.</p>
+        <p><strong>Características:</strong> Baixa volatilidade, alta liquidez, ideal para reserva de emergência e pouco impacto da marcação a mercado.</p>
+
+        <h4>Tesouro Prefixado</h4>
+        <p>Possui taxa fixa definida no momento da compra.</p>
+        <p><strong>Características:</strong> Permite travar uma taxa de juros, pode oscilar bastante antes do vencimento e é indicado quando se acredita na queda futura dos juros.</p>
+
+        <h4>Tesouro IPCA+</h4>
+        <p>Rende inflação (IPCA) mais uma taxa fixa. O IPCA é calculado pelo IBGE.</p>
+        <p><strong>Características:</strong> Protege contra inflação, garante ganho real se mantido até o vencimento e é indicado para objetivos de longo prazo.</p>
+
+        
+
+        <h3>Riscos</h3>
+        <p><strong>Risco de mercado (marcação a mercado):</strong> O preço dos títulos varia diariamente conforme as expectativas de juros. Se vendido antes do vencimento, pode haver lucro adicional ou prejuízo.</p>
+        <p><strong>Risco fiscal:</strong> É o risco de o governo não honrar o pagamento. É considerado o menor risco de crédito da economia brasileira.</p>
+        <p><strong>Risco de inflação:</strong> No prefixado, a inflação pode reduzir o ganho real. O IPCA+ protege contra esse risco.</p>
+
+        <h3>Tributação</h3>
+        <p>O Tesouro Direto segue a tabela regressiva de Imposto de Renda:</p>
+        
+        
+
+        <table class="tabela-estilizada">
+            <thead>
+                <tr>
+                    <th>Prazo da Aplicação</th>
+                    <th>Alíquota de IR</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Até 180 dias</td><td>22,5%</td></tr>
+                <tr><td>181 a 360 dias</td><td>20%</td></tr>
+                <tr><td>361 a 720 dias</td><td>17,5%</td></tr>
+                <tr><td>Acima de 720 dias</td><td>15%</td></tr>
+            </tbody>
+        </table>
+        <p><small><strong>Observações:</strong> O IOF incide apenas em resgates realizados em menos de 30 dias. O imposto é cobrado apenas sobre o rendimento, não sobre o valor total investido.</small></p>
+
+        <h3>Indicado para...</h3>
+        <table class="tabela-estilizada">
+            <thead>
+                <tr>
+                    <th>Tipo de Título</th>
+                    <th>Melhor para</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Tesouro Selic</td><td>Reserva de emergência e curto prazo</td></tr>
+                <tr><td>Tesouro Prefixado</td><td>Travar juros altos e metas de médio prazo</td></tr>
+                <tr><td>Tesouro IPCA+</td><td>Proteção contra inflação e objetivos de longo prazo</td></tr>
+            </tbody>
+        </table>
+
+        <div style="margin-top: 40px; border-top: 2px solid #00b386; padding-top: 20px; font-style: italic;">
+        </div>
+    </div>
+</div>
                 </div>
             </article>
 
             <article id="cat-rendavariavel" class="pagina-artigo">
-                <div class="artigo-completo">
-                    <h2>Renda Variável</h2>
-                    <p>Conteúdo sobre Renda Variável em desenvolvimento...</p>
-                </div>
-            </article>
+    <div class="artigo-completo">
+        <h2 style="color: #00b386; margin-bottom: 20px;">Explorando a Renda Variável</h2>
+        
+        <div class="menu-educacao" style="justify-content: flex-start; margin-bottom: 25px; background: #f1f5f9; padding: 10px; border-radius: 12px;">
+            <button class="btn-tema active" style="font-size: 14px;" onclick="abrirSubConteudo('rv-acoes', this)">Ações</button>
+            <button class="btn-tema" style="font-size: 14px;" onclick="abrirSubConteudo('rv-fiis', this)">FIIs</button>
+        </div>
+
+        <div id="rv-acoes" class="sub-artigo-content">
+    <div class="artigo-completo">
+        <h2 style="color: #00b386;">O que são Ações</h2>
+        <p>Ações representam pequenas partes do capital social de uma empresa. Ao adquirir uma ação, o investidor se torna sócio da companhia e passa a participar de seus resultados. As ações são negociadas na B3. Diferentemente da renda fixa, onde o investidor é credor, nas ações ele assume posição de proprietário. O retorno dependerá do desempenho da empresa e das condições econômicas.</p>
+
+        <h3>Como o investidor pode investir em ações</h3>
+        <p>O processo ocorre da seguinte forma:</p>
+        <ul>
+            <li>Abrir conta em uma corretora.</li>
+            <li>Transferir recursos.</li>
+            <li>Acessar o home broker.</li>
+            <li>Escolher a ação desejada.</li>
+            <li>Enviar a ordem de compra.</li>
+        </ul>
+        <p>Após a compra, as ações passam a compor a carteira do investidor, que pode manter para longo prazo, vender durante o pregão ou receber dividendos e juros sobre capital próprio.</p>
+
+        
+
+        <h3>Como o investidor ganha dinheiro com ações</h3>
+        <h4>1. Valorização (ganho de capital)</h4>
+        <p>O investidor compra por um preço e vende por outro maior. O lucro é a diferença positiva entre o preço de compra e o de venda. Esse ganho depende de fatores como crescimento da empresa, resultados financeiros, cenário econômico e a lei da oferta e demanda.</p>
+        
+        <h4>2. Dividendos</h4>
+        <p>Dividendos são parcelas do lucro distribuídas aos acionistas. Empresas como a Petrobras e o Itaú Unibanco são exemplos de companhias conhecidas por distribuição de lucros, embora os valores variem conforme os resultados.</p>
+
+        <h3>Principais riscos</h3>
+        <p><strong>Risco de mercado:</strong> Os preços das ações variam diariamente conforme cenário econômico, expectativas de juros e resultados das empresas. Mudanças na Taxa Selic impactam diretamente o mercado acionário.</p>
+        <p><strong>Risco da empresa:</strong> Problemas de gestão, prejuízos ou crises podem gerar quedas significativas no valor das ações.</p>
+        <p><strong>Risco de liquidez:</strong> Algumas ações possuem baixo volume de negociação, dificultando a venda rápida.</p>
+
+        <h3>Tributação</h3>
+        <p>Confira as regras atuais de tributação para o mercado acionário:</p>
+        <table class="tabela-estilizada">
+            <thead>
+                <tr>
+                    <th>Situação</th>
+                    <th>Regra de Tributação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Venda mensal até R$ 20.000 (operações comuns)</td><td>Isento de IR sobre o lucro</td></tr>
+                <tr><td>Venda mensal acima de R$ 20.000</td><td>15% sobre o lucro</td></tr>
+                <tr><td>Day trade</td><td>20% sobre o lucro</td></tr>
+                <tr><td>Dividendos até R$ 50.000 por mês por empresa</td><td>Isentos</td></tr>
+                <tr><td>Dividendos acima de R$ 50.000 por mês por empresa</td><td>10% de IR retido na fonte</td></tr>
+                <tr><td>Dividendos anuais acima de R$ 1.200.000</td><td>Ajuste anual na declaração, compensando o imposto retido</td></tr>
+                <tr><td>Lucros apurados em 2025 e distribuídos até 31/12/2025</td><td>Permanecem isentos, mesmo que pagos em 2026 ou depois</td></tr>
+            </tbody>
+        </table>
+        <p><small><strong>Observações:</strong> O imposto incide apenas sobre o lucro. Prejuízos podem ser compensados com lucros futuros. A principal mudança na nova regra foi o fim da isenção irrestrita sobre dividendos elevados.</small></p>
+
+        <h3>Resumo: Estratégias com Ações</h3>
+        <table class="tabela-estilizada">
+            <thead>
+                <tr>
+                    <th>Estratégia</th>
+                    <th>Melhor para</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Ações de crescimento</td><td>Valorização patrimonial no longo prazo</td></tr>
+                <tr><td>Ações pagadoras de dividendos</td><td>Geração de renda</td></tr>
+                <tr><td>Blue chips</td><td>Maior estabilidade relativa</td></tr>
+                <tr><td>Small caps</td><td>Maior potencial de crescimento, com maior risco</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Conclusão</h3>
+        <p>As ações continuam sendo um dos principais instrumentos de construção de patrimônio no longo prazo. A mudança na tributação dos dividendos impacta principalmente investidores com alto volume de recebimentos, mas não altera a estrutura de tributação sobre ganho de capital.</p>
+        <p>A decisão de investir deve considerar o horizonte de tempo, tolerância ao risco, objetivo financeiro e a estratégia escolhida (crescimento ou renda).</p>
+        
+        <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 15px;">
         </div>
     </div>
 </div>
 
-<div id="tab-renda" class="tab-content">
-    <div class="container-extra">
-        <h2 style="color: #00b386;">Renda Extra</h2>
-        <div class="artigo-completo">
-            <p>Aumentar seus aportes é o segredo para a liberdade financeira antecipada.</p>
+        <div id="rv-fiis" class="sub-artigo-content" style="display:none;">
+    <div class="artigo-completo">
+        <h2 style="color: #00b386;">O que são FIIs</h2>
+        <p>FIIs (Fundos de Investimento Imobiliário) são fundos que reúnem recursos de diversos investidores para aplicação no mercado imobiliário. Ao adquirir cotas de um FII, o investidor passa a ter direito a uma participação proporcional nos resultados do fundo, que podem vir de aluguéis de imóveis ou de títulos de crédito imobiliário. Os FIIs são negociados na B3, da mesma forma que as ações.</p>
+        <p>Diferentemente da compra direta de um imóvel, o investidor não precisa administrar contratos, inquilinos ou manutenção. Toda a gestão é realizada por um administrador e um gestor profissional.</p>
+
+        <h3>Como o investidor pode investir em FIIs</h3>
+        <p>O processo é semelhante ao das ações:</p>
+        <ul>
+            <li>Abrir conta em uma corretora.</li>
+            <li>Transferir recursos.</li>
+            <li>Acessar o home broker.</li>
+            <li>Escolher o FII desejado.</li>
+            <li>Enviar a ordem de compra.</li>
+        </ul>
+        <p>Após a aquisição, as cotas passam a compor a carteira do investidor. Ele pode receber rendimentos periódicos, vender as cotas durante o pregão ou manter o investimento no longo prazo.</p>
+
+        
+
+        <h3>Como o investidor ganha dinheiro com FIIs</h3>
+        <h4>1. Rendimentos periódicos</h4>
+        <p>Os FIIs são obrigados por lei a distribuir, no mínimo, 95% do lucro apurado aos cotistas. Na prática, a maioria dos fundos distribui rendimentos mensalmente. Esses rendimentos podem vir de aluguéis de imóveis (FIIs de tijolo) ou juros de títulos imobiliários (FIIs de papel).</p>
+        
+        <h4>2. Valorização das cotas</h4>
+        <p>O investidor também pode obter ganho de capital ao vender a cota por valor superior ao de compra. A valorização pode ocorrer devido ao aumento da receita do fundo, redução da vacância, valorização dos imóveis, queda da taxa de juros ou boa gestão.</p>
+
+        <h3>Tipos de FIIs</h3>
+        <ul>
+            <li><strong>FIIs de Tijolo:</strong> Investem em imóveis físicos (galpões, shoppings, lajes corporativas, hospitais). O retorno principal vem dos aluguéis.</li>
+            <li><strong>FIIs de Papel:</strong> Investem em títulos de crédito imobiliário (CRIs e LCIs). A rentabilidade costuma estar atrelada ao CDI ou IPCA.</li>
+            <li><strong>FIIs Híbridos:</strong> Combinam imóveis físicos e ativos financeiros na mesma carteira.</li>
+            <li><strong>FIIs de Fundos (FOFs):</strong> Investem em cotas de outros FIIs, promovendo diversificação interna.</li>
+        </ul>
+
+        <h3>Principais riscos</h3>
+        <p><strong>Risco de mercado:</strong> As cotas oscilam diariamente na bolsa. Juros mais altos tendem a reduzir a atratividade dos FIIs no curto prazo.</p>
+        <p><strong>Risco de vacância:</strong> Se os imóveis ficarem desocupados, a receita e os rendimentos diminuem.</p>
+        <p><strong>Risco de inadimplência:</strong> Inquilinos podem atrasar ou deixar de pagar aluguéis.</p>
+        <p><strong>Risco de crédito:</strong> Nos FIIs de papel, o risco de o emissor dos títulos não honrar os pagamentos.</p>
+
+        <h3>Tributação</h3>
+        <table class="tabela-estilizada">
+            <thead>
+                <tr>
+                    <th>Situação</th>
+                    <th>Regra de Tributação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Rendimentos distribuídos</td><td>Isentos de IR para pessoa física*</td></tr>
+                <tr><td>Ganho de capital na venda</td><td>20% sobre o lucro</td></tr>
+                <tr><td>Compensação de prejuízos</td><td>Permitida com lucros futuros em FIIs</td></tr>
+                <tr><td>Isenção de vendas até R$ 20k</td><td>Não existe para FIIs</td></tr>
+            </tbody>
+        </table>
+        <p><small><strong>Observações:</strong> O IR sobre ganho de capital deve ser pago via DARF até o último dia útil do mês seguinte à venda. *A isenção de rendimentos aplica-se quando o investidor e o fundo cumprem os requisitos legais.</small></p>
+
+        <h3>Resumo: Estratégias com FIIs</h3>
+        <table class="tabela-estilizada">
+            <thead>
+                <tr>
+                    <th>Estratégia</th>
+                    <th>Melhor para</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>FIIs de Tijolo</td><td>Renda mensal de imóveis físicos</td></tr>
+                <tr><td>FIIs de Papel</td><td>Exposição a juros e inflação (crédito)</td></tr>
+                <tr><td>FIIs Híbridos</td><td>Diversificação entre imóveis e crédito</td></tr>
+                <tr><td>FOFs</td><td>Diversificação automática no setor</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Conclusão</h3>
+        <p>Os FIIs combinam características do mercado imobiliário com a liquidez da bolsa de valores. São indicados para investidores que buscam renda recorrente e exposição ao setor imobiliário sem adquirir imóveis diretamente. Apesar da previsibilidade de renda, são investimentos de renda variável sujeitos a oscilações.</p>
+    </div>
+</div>
+    </div>
+</article>
         </div>
     </div>
 </div>
