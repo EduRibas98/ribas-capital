@@ -103,61 +103,105 @@
     <button class="tab-link" onclick="switchTab(event, 'tab-sobre')">Sobre a Ribas</button>
 </nav>
 
-<div id="tab-ferramentas" class="tab-content active">
-    <header class="hero">
-        <div class="hero-content">
-            <h1>Simulador de Juros Compostos</h1>
-            <p>Descubra o poder do tempo no seu patrimônio.</p>
-            <a href="#simulador-container" class="hero-button">Começar Simulação</a>
+<div id="tab-ferramentas" class="tab-content">
+    <div class="container-extra">
+        <div class="menu-educacao" style="justify-content: center; margin-bottom: 30px;">
+            <button class="btn-tema active" onclick="abrirSubConteudo('ferr-juros', this)">Juros Compostos</button>
+            <button class="btn-tema" onclick="abrirSubConteudo('ferr-reverso', this)">Simulador Reverso</button>
         </div>
-    </header>
 
-    <main id="simulador-container" class="simulador">
-        <div class="card" id="area-simulador">
-            <div class="grid-inputs">
-                <div class="campo"><label>Valor Inicial (R$)</label><input type="number" id="valorInicial" placeholder="Ex: 1000"></div>
-                <div class="campo"><label>Aporte Mensal (R$)</label><input type="number" id="aporteMensal" placeholder="Ex: 500"></div>
-                <div class="campo"><label>Taxa Mensal (%)</label><input type="number" id="taxa" placeholder="Ex: 1" step="0.1"></div>
-                <div class="campo"><label>Tempo (meses)</label><input type="number" id="tempo" placeholder="Ex: 120"></div>
-                <div class="campo">
-                    <label>Comparador:</label>
-                    <select id="comparador">
-                        <option value="0.005">Poupança (0,5% a.m.)</option>
-                        <option value="0.0037">Inflação / IPCA (Média)</option>
-                    </select>
+        <article id="ferr-juros" class="sub-artigo-content active">
+            <header class="hero">
+                <div class="hero-content">
+                    <h1>Simulador de Juros Compostos</h1>
+                    <p>Descubra o poder do tempo no seu patrimônio.</p>
                 </div>
-            </div>
+            </header>
 
-            <div class="botoes-container" style="display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0;">
-                <button onclick="calcular()" style="flex: 2;">Calcular Investimento</button>
-                <button onclick="limpar()" class="btn-limpar" style="flex: 1; background: #64748b; color: white;">Limpar</button>
-            </div>
+            <main id="simulador-container" class="simulador">
+                <div class="card" id="area-simulador">
+                    <div class="grid-inputs">
+                        <div class="campo">
+    <label>Valor Inicial</label>
+    <input type="text" id="valorInicial" placeholder="R$ 0,00" oninput="mascaraMoeda(this)">
+</div>
+<div class="campo">
+    <label>Aporte Mensal</label>
+    <input type="text" id="aporteMensal" placeholder="R$ 0,00" oninput="mascaraMoeda(this)">
+</div>
+                        <div class="campo"><label>Taxa Mensal (%)</label><input type="number" id="taxa" placeholder="Ex: 1" step="0.1"></div>
+                        <div class="campo"><label>Tempo (meses)</label><input type="number" id="tempo" placeholder="Ex: 120"></div>
+                        <div class="campo">
+                            <label>Comparador:</label>
+                            <select id="comparador">
+                                <option value="0.005">Poupança (0,5% a.m.)</option>
+                                <option value="0.0037">Inflação / IPCA (Média)</option>
+                            </select>
+                        </div>
+                    </div>
 
-            <div id="cards-resumo"></div>
+                    <div class="botoes-container" style="margin: 20px 0;">
+                        <button onclick="calcular()" style="width: 100%;">Calcular Investimento</button>
+                    </div>
+
+                    <div id="cards-resumo"></div>
+                    
+                    <div class="chart-container" style="position: relative; height:300px;">
+    <canvas id="grafico"></canvas>
+	            </div>
+
+                    <div id="tabela-evolucao-container" style="display: none; margin-top: 30px; overflow-x: auto;">
+                        <table id="tabela-dados">
+                            <thead>
+                                <tr>
+                                    <th>Mês</th>
+                                    <th>Total Investido</th>
+                                    <th>Juros</th>
+                                    <th>Acumulado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="corpo-tabela"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </article>
+
+        <article id="ferr-reverso" class="sub-artigo-content" style="display:none;">
+            <header class="hero" style="background: linear-gradient(135.2deg, #1e293b 1.2%, #334155 98.8%);">
+                <div class="hero-content">
+                    <h1>Simulador Reverso</h1>
+                    <p>Quanto você precisa poupar hoje para atingir seu objetivo amanhã?</p>
+                </div>
+            </header>
             
-            <div class="chart-container">
-                <canvas id="grafico"></canvas>
+            <main class="simulador">
+    <div class="card">
+        <div class="grid-inputs">
+            <div class="campo">
+    <label>Objetivo Final</label>
+    <input type="text" id="objetivoFinal" placeholder="R$ 0,00" oninput="mascaraMoeda(this)">
+</div>
+            <div class="campo">
+                <label>Taxa Mensal (%)</label>
+                <input type="number" id="taxaReverso" placeholder="Ex: 1" step="0.1">
             </div>
-
-            <div id="tabela-evolucao-container" style="display: none; margin-top: 30px; overflow-x: auto;">
-                <table id="tabela-dados">
-                    <thead>
-                        <tr>
-                            <th>Mês</th>
-                            <th>Total Investido</th>
-                            <th>Juros</th>
-                            <th>Acumulado</th>
-                        </tr>
-                    </thead>
-                    <tbody id="corpo-tabela"></tbody>
-                </table>
+            <div class="campo">
+                <label>Tempo (meses)</label>
+                <input type="number" id="tempoReverso" placeholder="Ex: 120">
             </div>
+        </div>
 
-            <button id="btn-exportar-pdf" onclick="exportarPDF()" class="btn-pdf" style="display: none; margin-top: 20px;">
-                Baixar Relatório em PDF
+        <div class="botoes-container" style="margin: 20px 0;">
+            <button onclick="calcularReverso()" style="width: 100%; background: #1e293b; color: white;">
+                Calcular Aporte Necessário
             </button>
         </div>
-    </main>
+
+        <div id="resultado-reverso"></div>
+    </div>
+</main>
+    </div>
 </div>
 
 <div id="tab-renda" class="tab-content">
@@ -927,7 +971,7 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
             <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #00b386;">
                 <strong style="display: block; margin-bottom: 8px; color: #1e293b;">1. Gestão Estratégica de Ativos</strong>
-                <p style="font-size: 0.9em; color: #64748b; margin: 0;">Alocação inteligente em Empresas Brasileiras, FIIs, Mercado Internacional e Criptoativos, buscando o equilíbrio entre preservação de capital e crescimento composto.</p>
+                <p style="font-size: 0.9em; color: #64748b; margin: 0;">Alocação inteligente em Empresas Brasileiras, Imóveis, Mercado Internacional e Criptoativos, buscando o equilíbrio entre preservação de capital e crescimento composto.</p>
             </div>
 
             <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #00b386;">
