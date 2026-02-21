@@ -144,10 +144,18 @@ window.switchTab = function(event, tabId) {
 
 // --- NAVEGAÇÃO DE CATEGORIAS (Educação) ---
 window.abrirCategoria = function(catId, btn) {
-    document.querySelectorAll('.pagina-artigo').forEach(art => art.classList.remove('active'));
+    // Esconde todos primeiro
+    document.querySelectorAll('.pagina-artigo').forEach(art => {
+        art.classList.remove('active');
+        art.style.display = 'none'; // Adicione esta linha
+    });
+    
     btn.parentElement.querySelectorAll('.btn-tema').forEach(b => b.classList.remove('active'));
     
-    document.getElementById(catId).classList.add('active');
+    // Mostra o selecionado
+    const alvo = document.getElementById(catId);
+    alvo.classList.add('active');
+    alvo.style.display = 'block'; // Adicione esta linha
     btn.classList.add('active');
 };
 

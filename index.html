@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-M7J5F6PT');</script>
-<!-- End Google Tag Manager -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YXDK2HS6FE"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -113,10 +106,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </style>
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M7J5F6PT"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+
 <nav class="tab-navigation">
     <button class="tab-link active" onclick="switchTab(event, 'tab-ferramentas')">Ferramentas Financeiras</button>
     <button class="tab-link" onclick="switchTab(event, 'tab-educacao')">Aprenda a Investir</button>
@@ -158,7 +148,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <option value="0.005">Poupança (0,5% a.m.)</option>
                                 <option value="0.0037">Inflação / IPCA (Média)</option>
                             </select>
+
                         </div>
+
                     </div>
 
                     <div class="botoes-container" style="margin: 20px 0;">
@@ -188,7 +180,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </main>
         </article>
 
-        <article id="ferr-reverso" class="sub-artigo-content" style="display:none;">
+        <article id="ferr-reverso" class="sub-artigo-content">
             <header class="hero" style="background: linear-gradient(135.2deg, #1e293b 1.2%, #334155 98.8%);">
                 <div class="hero-content">
                     <h1>Simulador Reverso</h1>
@@ -536,11 +528,168 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         
         <div class="menu-educacao">
             <button class="btn-tema active" onclick="abrirCategoria('cat-intro', this)">Introdução</button>
+	    <button class="btn-tema" onclick="abrirCategoria('cat-livros', this)">Livros</button>
             <button class="btn-tema" onclick="abrirCategoria('cat-rendafixa', this)">Renda Fixa</button>
             <button class="btn-tema" onclick="abrirCategoria('cat-rendavariavel', this)">Renda Variável</button>
         </div>
 
+
         <div id="area-leitura">
+
+<article id="cat-livros" class="pagina-artigo" style="display:none;">
+    <div class="artigo-completo">
+        <h2 style="color: #00b386; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 20px;">Biblioteca do Investidor</h2>
+        
+        <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin-bottom: 30px; border-left: 5px solid #00b386;">
+            <h3 style="color: #1e293b; margin-top: 0;">Por que ler sobre finanças?</h3>
+            <p style="color: #475569; line-height: 1.6; margin-bottom: 0;">
+                O mercado financeiro é 20% técnica e 80% comportamento. Os livros são o atalho mais barato para absorver décadas de experiência. Eles não ensinam apenas onde colocar o dinheiro, mas como **blindar sua mente** contra o medo e a ganância.
+            </p>
+        </div>
+
+        <p style="font-weight: 600; color: #1e293b; margin-top: 30px;">📘 Clássicos e Fundamentais:</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 15px;">
+            
+            <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="color: #1e293b; margin-bottom: 5px; font-size: 1.1rem;">O Investidor Inteligente</h3>
+                    <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 5px;">Benjamin Graham</p>
+                    <p style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">(The Intelligent Investor)</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">O guia definitivo sobre Value Investing e princípios de investimento racional.</p>
+                </div>
+                <a href="https://amzn.to/4atlIXJ" target="_blank" style="display: inline-block; margin-top: 15px; background: #00b386; color: white; text-decoration: none; padding: 8px 15px; border-radius: 8px; font-size: 0.85rem; font-weight: bold;">Ver na Amazon</a>
+            </div>
+
+            <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="color: #1e293b; margin-bottom: 5px; font-size: 1.1rem;">Um Passeio Aleatório por Wall Street</h3>
+                    <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 5px;">Burton G. Malkiel</p>
+                    <p style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">(A Random Walk Down Wall Street)</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Explica por que estratégias simples de longo prazo tendem a vencer o mercado.</p>
+                </div>
+                <a href="https://amzn.to/3OTMRKU" target="_blank" style="display: inline-block; margin-top: 15px; background: #00b386; color: white; text-decoration: none; padding: 8px 15px; border-radius: 8px; font-size: 0.85rem; font-weight: bold;">Ver na Amazon</a>
+            </div>
+
+            <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="color: #1e293b; margin-bottom: 5px; font-size: 1.1rem;">Investindo em Ações no Longo Prazo: O Guia Indispensável do Investidor do Mercado Financeiro</h3>
+                    <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 5px;">Jeremy Siegel</p>
+                    <p style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">(Stocks for the Long Run)</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Análise histórica mostrando por que ações superam ativos de renda fixa no tempo.</p>
+                </div>
+                <a href="https://amzn.to/4cEgoCa" target="_blank" style="display: inline-block; margin-top: 15px; background: #00b386; color: white; text-decoration: none; padding: 8px 15px; border-radius: 8px; font-size: 0.85rem; font-weight: bold;">Ver na Amazon</a>
+            </div>
+
+            <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="color: #1e293b; margin-bottom: 5px; font-size: 1.1rem;">Ações Comuns, Lucros Extraordinários</h3>
+                    <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 5px;">Philip Fisher</p>
+                    <p style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">(Common Stocks and Uncommon Profits)</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Foco em identificar empresas com potencial de crescimento extraordinário.</p>
+                </div>
+                <a href="https://amzn.to/4ro4Szs" target="_blank" style="display: inline-block; margin-top: 15px; background: #00b386; color: white; text-decoration: none; padding: 8px 15px; border-radius: 8px; font-size: 0.85rem; font-weight: bold;">Ver na Amazon</a>
+            </div>
+
+            <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="color: #1e293b; margin-bottom: 5px; font-size: 1.1rem;">Análise de Investimentos</h3>
+                    <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 5px;">Graham & Dodd</p>
+                    <p style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">(Security Analysis)</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Estudo técnico profundo sobre avaliação de ativos e valuation fundamentalista.</p>
+                </div>
+                <a href="https://amzn.to/4rt3rzE" target="_blank" style="display: inline-block; margin-top: 15px; background: #00b386; color: white; text-decoration: none; padding: 8px 15px; border-radius: 8px; font-size: 0.85rem; font-weight: bold;">Ver na Amazon</a>
+            </div>
+
+            <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="color: #1e293b; margin-bottom: 5px; font-size: 1.1rem;">O investidor de bom senso: A melhor maneira de garantir um bom desempenho no mercado de ações</h3>
+                    <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 5px;">John C. Bogle</p>
+                    <p style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">(The Little Book of Common Sense Investing)</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">A filosofia de baixo custo e investimentos em índices (ETFs) para eficiência.</p>
+                </div>
+                <a href="v" target="_blank" style="display: inline-block; margin-top: 15px; background: #00b386; color: white; text-decoration: none; padding: 8px 15px; border-radius: 8px; font-size: 0.85rem; font-weight: bold;">Ver na Amazon</a>
+            </div>
+        </div>
+
+        <p style="font-weight: 600; color: #1e293b; margin-top: 40px;">📈 Estratégia e Mentalidade:</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 15px;">
+            
+            <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="color: #1e293b; margin-bottom: 5px; font-size: 1.1rem;">A filosofia de Warren Buffett: Os grandes ensinamentos do maior investidor de todos os tempos</h3>
+                    <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 5px;">Warren Buffett</p>
+                    <p style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">(The Essays of Warren Buffett)</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">As cartas anuais do maior investidor de todos os tempos compiladas por temas.</p>
+                </div>
+                <a href="https://amzn.to/3OldqIX" target="_blank" style="display: inline-block; margin-top: 15px; background: #00b386; color: white; text-decoration: none; padding: 8px 15px; border-radius: 8px; font-size: 0.85rem; font-weight: bold;">Ver na Amazon</a>
+            </div>
+
+            <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="color: #1e293b; margin-bottom: 5px; font-size: 1.1rem;">O Jeito Peter Lynch de Investir</h3>
+                    <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 5px;">Peter Lynch</p>
+                    <p style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">(One Up On Wall Street)</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Como identificar grandes oportunidades na bolsa usando o conhecimento do cotidiano.</p>
+                </div>
+                <a href="https://amzn.to/40kUZGP" target="_blank" style="display: inline-block; margin-top: 15px; background: #00b386; color: white; text-decoration: none; padding: 8px 15px; border-radius: 8px; font-size: 0.85rem; font-weight: bold;">Ver na Amazon</a>
+            </div>
+
+            <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="color: #1e293b; margin-bottom: 5px; font-size: 1.1rem;">A sabedoria de Charlie Munger</h3>
+                    <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 5px;">Charlie Munger</p>
+                    <p style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">(Poor Charlie’s Almanack)</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Modelos mentais e a sabedoria prática sobre vida, negócios e investimentos.</p>
+                </div>
+                <a href="https://amzn.to/3ZPaM0p" target="_blank" style="display: inline-block; margin-top: 15px; background: #00b386; color: white; text-decoration: none; padding: 8px 15px; border-radius: 8px; font-size: 0.85rem; font-weight: bold;">Ver na Amazon</a>
+            </div>
+
+            <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="color: #1e293b; margin-bottom: 5px; font-size: 1.1rem;">Iludidos pelo Acaso</h3>
+                    <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 5px;">Nassim Nicholas Taleb</p>
+                    <p style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">(Fooled by Randomness)</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Como a sorte e a aleatoriedade são confundidas com habilidade no mercado.</p>
+                </div>
+                <a href="https://amzn.to/3Ol7UpL" target="_blank" style="display: inline-block; margin-top: 15px; background: #00b386; color: white; text-decoration: none; padding: 8px 15px; border-radius: 8px; font-size: 0.85rem; font-weight: bold;">Ver na Amazon</a>
+            </div>
+        </div>
+
+        <p style="font-weight: 600; color: #1e293b; margin-top: 40px;">💰 Educação Financeira:</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 15px;">
+            
+            <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="color: #1e293b; margin-bottom: 5px; font-size: 1.1rem;">O Homem Mais Rico da Babilônia</h3>
+                    <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 5px;">George S. Clason</p>
+                    <p style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">(The Richest Man in Babylon)</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Parábolas milenares sobre como poupar parte do que ganha e investir.</p>
+                </div>
+                <a href="https://amzn.to/3Olexs6" target="_blank" style="display: inline-block; margin-top: 15px; background: #00b386; color: white; text-decoration: none; padding: 8px 15px; border-radius: 8px; font-size: 0.85rem; font-weight: bold;">Ver na Amazon</a>
+            </div>
+
+            <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="color: #1e293b; margin-bottom: 5px; font-size: 1.1rem;">Do mil ao milhão: sem cortar o cafezinho </h3>
+                    <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 5px;">Thiago Nigro</p>
+                    <p style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">(The Only Investment Guide You’ll Ever Need)</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Um guia prático focado nos três pilares da riqueza: gastar bem, investir melhor e ganhar mais..</p>
+                </div>
+                <a href="https://amzn.to/4tPtlza" target="_blank" style="display: inline-block; margin-top: 15px; background: #00b386; color: white; text-decoration: none; padding: 8px 15px; border-radius: 8px; font-size: 0.85rem; font-weight: bold;">Ver na Amazon</a>
+            </div>
+<div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+            <h3 style="color: #1e293b; margin-bottom: 5px; font-size: 1.1rem;">O Homem que Comprou o Tempo</h3>
+            <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 5px;">Thiago Nigro</p>
+            <p style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">(Gestão e Prosperidade)</p>
+            <p style="font-size: 0.9rem; margin-top: 10px;">Reflexões sobre como gerir o recurso mais escasso de todos — o tempo — para alcançar a verdadeira liberdade.</p>
+        </div>
+        <a href="https://amzn.to/4s1zGpB" target="_blank" style="display: inline-block; margin-top: 15px; background: #00b386; color: white; text-decoration: none; padding: 8px 15px; border-radius: 8px; font-size: 0.85rem; font-weight: bold;">Ver na Amazon</a>
+    </div>
+        </div>
+    </div>
+</article>
+
             <article id="cat-intro" class="pagina-artigo active">
                 <div class="artigo-completo">
                     <h2 style="color: #00b386;">Introdução aos Investimentos</h2>
@@ -1071,4 +1220,3 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="script.js"></script>
 </body>
 </html>
-

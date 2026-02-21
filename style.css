@@ -7,8 +7,6 @@ body {
     background: #0f172a;
     color: #f8fafc;
     text-align: center;
-    /* Evita que o conteúdo transborde horizontalmente no mobile */
-    overflow-x: hidden; 
 }
 
 /* --- 2. LAYOUT E CARDS --- */
@@ -21,28 +19,8 @@ body {
 input, select { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 16px; }
 
 /* --- 3. TABELAS E GRÁFICOS --- */
-.chart-container { 
-    position: relative; 
-    height: 400px; 
-    width: 100%; 
-    margin: 30px 0; 
-}
-
-/* Container para permitir scroll horizontal em tabelas no mobile */
-.tabela-responsiva {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin: 20px 0;
-    border-radius: 12px;
-}
-
-.tabela-estilizada, #tabela-dados { 
-    width: 100%; 
-    border-collapse: collapse; 
-    background: white; 
-    min-width: 500px; /* Garante que a tabela não esmague no celular */
-}
+.chart-container { position: relative; height: 400px; width: 100%; margin: 30px 0; }
+.tabela-estilizada, #tabela-dados { width: 100%; margin: 20px auto; border-collapse: collapse; background: white; }
 .tabela-estilizada th, .tabela-estilizada td, #tabela-dados th, #tabela-dados td {
     border: 1px solid #e2e8f0; padding: 12px; text-align: left; color: #1e293b;
 }
@@ -50,34 +28,11 @@ input, select { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-ra
 
 /* --- 4. BOTÕES --- */
 button { background: #00b386; color: white; border: none; padding: 18px; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; width: 100%; transition: 0.3s; }
-button:hover { opacity: 0.9; transform: scale(0.99); }
 .btn-pdf { background: #1e293b !important; margin-top: 15px; font-size: 14px !important; padding: 12px !important; }
 
 /* --- 5. NAVEGAÇÃO PRINCIPAL --- */
-.tab-navigation { 
-    display: flex; 
-    justify-content: center; 
-    background: #1e293b; 
-    padding: 10px; 
-    position: sticky; 
-    top: 0; 
-    z-index: 1000; 
-    gap: 10px; 
-    border-bottom: 2px solid #00b386; 
-    flex-wrap: nowrap; /* Impede quebrar linha para manter o estilo de menu */
-    overflow-x: auto; /* Permite scroll lateral se houver muitas abas no mobile */
-}
-.tab-link { 
-    background: transparent; 
-    color: #94a3b8; 
-    padding: 10px 20px; 
-    border: none; 
-    cursor: pointer; 
-    font-weight: bold; 
-    border-radius: 8px; 
-    width: auto; 
-    white-space: nowrap; /* Mantém o texto em uma linha só */
-}
+.tab-navigation { display: flex; justify-content: center; background: #1e293b; padding: 10px; position: sticky; top: 0; z-index: 1000; gap: 15px; border-bottom: 2px solid #00b386; flex-wrap: wrap; }
+.tab-link { background: transparent; color: #94a3b8; padding: 12px 25px; border: none; cursor: pointer; font-weight: bold; border-radius: 8px; width: auto; }
 .tab-link.active { background: #00b386; color: white; }
 .tab-content { display: none; animation: fadeIn 0.5s ease; }
 .tab-content.active { display: block; }
@@ -106,56 +61,105 @@ button:hover { opacity: 0.9; transform: scale(0.99); }
 }
 .patrimonio-total-container.ganho-card { border-left: 5px solid #3b82f6; }
 .patrimonio-total-container span { font-size: 0.85rem; opacity: 0.8; text-transform: uppercase; display: flex; align-items: center; justify-content: center; }
-.patrimonio-total-container h2 { font-size: 2.2rem; margin: 5px 0; color: #00b386; }
-.patrimonio-total-container.ganho-card h2 { color: #3b82f6; }
+.patrimonio-total-container h2 { font-size: 2.2rem; margin: 5px 0; color: #00b38
 
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 15px;
-    margin-top: 15px;
-}
-.stat-card { background: #f1f5f9; padding: 15px; border-radius: 8px; text-align: center; font-size: 0.9rem; color: #334155; }
-.stat-card strong { display: block; font-size: 1.1rem; color: #00b386; margin-top: 5px; }
-
-/* --- 8. HERO --- */
-.hero { padding: 60px 20px; background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=2070') no-repeat center/cover; border-radius: 0 0 50px 50px; margin-bottom: 40px; }
-.hero-button { display: inline-block; background: #00b386; color: white; text-decoration: none; padding: 18px 32px; border-radius: 12px; font-size: 18px; font-weight: bold; animation: flutuar 3s ease-in-out infinite; }
-
-/* --- 9. RESPONSIVIDADE (MOBILE) --- */
-@media (max-width: 768px) {
-    .hero { padding: 40px 10px; border-radius: 0 0 30px 30px; }
-    .hero h1 { font-size: 1.8rem; }
-    
-    .card { padding: 25px 15px; width: 95%; }
-    .artigo-completo { padding: 25px 15px; }
-
-    /* Força grids a terem apenas 1 coluna no celular */
-    .grid-inputs, 
-    .patrimonio-grid, 
-    .stats-grid { 
-        grid-template-columns: 1fr !important; 
-    }
-
-    .patrimonio-total-container h2 { font-size: 1.8rem; }
-    
-    .chart-container { height: 300px; } /* Reduz altura do gráfico no mobile */
-
-    .tab-navigation {
-        justify-content: flex-start;
-        padding: 5px;
-    }
-    
-    .tab-link {
-        padding: 10px 15px;
-        font-size: 14px;
-    }
+/* Isso garante que a página ativa sempre apareça, não importa o quê */
+.pagina-artigo.active {
+    display: block !important;
 }
 
-/* --- 10. ANIMAÇÕES --- */
-@keyframes flutuar { 0% { transform: translateY(0); } 50% { transform: translateY(-7px); } 100% { transform: translateY(0); } }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+/* --- ESTILIZAÇÃO DA BIBLIOTECA (QUADRO CINZA) --- */
+.secao-livros {
+    background: #f1f5f9; /* Quadro cinza */
+    padding: 25px;
+    border-radius: 15px;
+    border-left: 5px solid #00b386; /* Faixa verde lateral */
+    text-align: left;
+    margin-top: 20px;
+}
 
-.pagina-artigo { display: none; }
-.pagina-artigo.active { display: block; }
-.sub-artigo-content { margin-top: 20px; }
+.secao-livros h3 {
+    color: #00b386 !important;
+    margin-top: 0; /* Remove margem superior do primeiro título */
+    font-size: 1.2rem;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 8px;
+}
+
+.secao-livros ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.secao-livros li {
+    margin-bottom: 15px;
+    padding-left: 30px;
+    position: relative;
+    line-height: 1.6;
+    color: #334155;
+}
+
+.secao-livros li::before {
+    content: "📘";
+    position: absolute;
+    left: 0;
+    font-size: 1rem;
+}
+
+.secao-livros li strong {
+    color: #1e293b;
+    font-weight: 700;
+}
+
+.secao-livros li em {
+    color: #64748b;
+    font-size: 0.95rem;
+    display: block; /* Faz a descrição ficar na linha de baixo */
+}
+
+/* Container Cinza dos Livros */
+.secao-livros {
+    background: #f1f5f9 !important; /* Cor cinza sutil */
+    padding: 25px;
+    border-radius: 16px;
+    border-left: 6px solid #00b386; /* Faixa verde lateral */
+    margin-top: 25px;
+    text-align: left; /* Alinha o texto à esquerda dentro da caixa */
+}
+
+.secao-livros h3 {
+    color: #1e293b !important;
+    font-size: 1.15rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 5px;
+}
+
+.secao-livros h3:first-child { margin-top: 0; }
+
+.secao-livros ul {
+    list-style: none;
+    padding: 0;
+}
+
+.secao-livros li {
+    margin-bottom: 18px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.secao-livros li strong {
+    display: block;
+    color: #0f172a;
+    font-size: 1rem;
+}
+
+.secao-livros li em {
+    display: block;
+    color: #64748b;
+    font-style: normal;
+    font-size: 0.9rem;
+    margin-top: 2px;
+}
