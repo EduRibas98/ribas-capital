@@ -342,6 +342,29 @@ window.calcularReverso = function() {
         </div>`;
 };
 
+function calcFireNovo() {
+    let gasto = document.getElementById('gastoFire').value.replace(/\D/g, "") / 100;
+    if (!gasto) return alert("Insira o valor!");
+    let meta = (gasto * 12) / 0.04;
+    document.getElementById('res-fire-novo').innerHTML = `<div style="padding:15px; background:#f0fdf4; border-radius:10px;"><strong>Meta FIRE:</strong> R$ ${meta.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</div>`;
+}
+
+function calcFixaNova() {
+    let cdb = parseFloat(document.getElementById('rentCdbNovo').value);
+    let ir = parseFloat(document.getElementById('prazoCdbNovo').value);
+    if (!cdb) return alert("Insira a taxa do CDB!");
+    let eq = cdb * (1 - ir);
+    document.getElementById('res-fixa-novo').innerHTML = `<div style="padding:15px; background:#f8fafc; border-radius:10px;">Equivale a uma <strong>LCI/LCA de ${eq.toFixed(2)}% do CDI</strong></div>`;
+}
+
+function calcInflacaoNova() {
+    let valor = document.getElementById('valorInflacao').value.replace(/\D/g, "") / 100;
+    let anos = parseInt(document.getElementById('anosInflacao').value);
+    if (!valor || !anos) return alert("Preencha os campos!");
+    let final = valor / Math.pow(1.045, anos); // Estimativa IPCA 4.5%
+    document.getElementById('res-inflacao-novo').innerHTML = `<div style="padding:15px; background:#fff1f2; border-radius:10px;">Seu dinheiro valerá o equivalente a <strong>R$ ${final.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</strong> de hoje.</div>`;
+}
+
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
     atualizarCarteiraReal();
