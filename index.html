@@ -116,10 +116,13 @@
 
 <div id="tab-ferramentas" class="tab-content">
     <div class="container-extra">
-        <div class="menu-educacao" style="justify-content: center; margin-bottom: 30px;">
-            <button class="btn-tema active" onclick="abrirSubConteudo('ferr-juros', this)">Juros Compostos</button>
-            <button class="btn-tema" onclick="abrirSubConteudo('ferr-reverso', this)">Simulador Reverso</button>
-        </div>
+        <div class="menu-educacao" style="justify-content: center; margin-bottom: 30px; display: flex; flex-wrap: wrap; gap: 10px;">
+    <button class="btn-tema active" onclick="abrirSubConteudo('ferr-juros', this)">Juros Compostos</button>
+    <button class="btn-tema" onclick="abrirSubConteudo('ferr-reverso', this)">Simulador Reverso</button>
+    <button class="btn-tema" onclick="abrirSubConteudo('ferr-fire', this)">Independência FIRE</button>
+    <button class="btn-tema" onclick="abrirSubConteudo('ferr-fixa', this)">CDB vs LCI</button>
+    <button class="btn-tema" onclick="abrirSubConteudo('ferr-inflacao', this)">Poder de Compra</button>
+</div>
 
         <article id="ferr-juros" class="sub-artigo-content active">
             <header class="hero">
@@ -214,6 +217,80 @@
         <div id="resultado-reverso"></div>
     </div>
 </main>
+
+</article> <article id="ferr-fire" class="sub-artigo-content" style="display:none;">
+    <header class="hero" style="background: linear-gradient(135deg, #065f46 0%, #00b386 100%);">
+        <div class="hero-content">
+            <h1>Calculadora FIRE</h1>
+            <p>Quanto você precisa para viver de renda?</p>
+        </div>
+    </header>
+    <main class="simulador">
+        <div class="card">
+            <div class="campo">
+                <label>Gasto Mensal Desejado</label>
+                <input type="text" id="gastoFire" placeholder="R$ 0,00" oninput="mascaraMoeda(this)">
+            </div>
+            <button onclick="calcFireNovo()" style="width: 100%; background: #00b386; color: white; margin-top: 15px;">Calcular Meta</button>
+            <div id="res-fire-novo" style="margin-top: 20px;"></div>
+        </div>
+    </main>
+</article>
+
+<article id="ferr-fixa" class="sub-artigo-content" style="display:none;">
+    <header class="hero" style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%);">
+        <div class="hero-content">
+            <h1>CDB vs LCI/LCA</h1>
+            <p>Compare rentabilidade líquida com e sem imposto.</p>
+        </div>
+    </header>
+    <main class="simulador">
+        <div class="card">
+            <div class="grid-inputs">
+                <div class="campo">
+                    <label>CDB (% do CDI)</label>
+                    <input type="number" id="rentCdbNovo" placeholder="Ex: 110">
+                </div>
+                <div class="campo">
+                    <label>Prazo</label>
+                    <select id="prazoCdbNovo" style="width:100%; padding:10px; border-radius:5px; border:1px solid #ddd;">
+                        <option value="0.225">Até 180 dias</option>
+                        <option value="0.20">181 a 360 dias</option>
+                        <option value="0.175">361 a 720 dias</option>
+                        <option value="0.15">Acima de 720 dias</option>
+                    </select>
+                </div>
+            </div>
+            <button onclick="calcFixaNova()" style="width: 100%; background: #1e293b; color: white; margin-top: 15px;">Ver Equivalente Isento</button>
+            <div id="res-fixa-novo" style="margin-top: 20px;"></div>
+        </div>
+    </main>
+</article>
+
+<article id="ferr-inflacao" class="sub-artigo-content" style="display:none;">
+    <header class="hero" style="background: linear-gradient(135deg, #9f1239 0%, #e11d48 100%);">
+        <div class="hero-content">
+            <h1>Poder de Compra</h1>
+            <p>A inflação corrói seu dinheiro. Veja o impacto.</p>
+        </div>
+    </header>
+    <main class="simulador">
+        <div class="card">
+            <div class="grid-inputs">
+                <div class="campo">
+                    <label>Valor Hoje</label>
+                    <input type="text" id="valorInflacao" placeholder="R$ 0,00" oninput="mascaraMoeda(this)">
+                </div>
+                <div class="campo">
+                    <label>Tempo (Anos)</label>
+                    <input type="number" id="anosInflacao" placeholder="Ex: 10">
+                </div>
+            </div>
+            <button onclick="calcInflacaoNova()" style="width: 100%; background: #e11d48; color: white; margin-top: 15px;">Simular Perda</button>
+            <div id="res-inflacao-novo" style="margin-top: 20px;"></div>
+        </div>
+    </main>
+</article>
     </div>
 </div>
 
@@ -1220,4 +1297,3 @@
 <script src="script.js"></script>
 </body>
 </html>
-
