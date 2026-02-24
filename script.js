@@ -75,10 +75,8 @@ async function atualizarCarteiraReal() {
         const valorBTC = meusAtivos.cripto.BTC * COTACAO_BITCOIN_BRL;
         totalCripto = valorBTC;
         listaAtivos.push({ classe: "Cripto", ticker: "BITCOIN", valorBRL: valorBTC });
-        
         listaAtivos.push({ classe: "Imóvel", ticker: "TERRENO", valorBRL: meusAtivos.imoveisFisicos });
         totalFiis += meusAtivos.imoveisFisicos; 
-
         listaAtivos.push({ classe: "Renda Fixa", ticker: "IPCA", valorBRL: meusAtivos.rendaFixa });
 
         listaAtivos.sort((a, b) => b.valorBRL - a.valorBRL);
@@ -87,22 +85,22 @@ async function atualizarCarteiraReal() {
         if (corpoTabela) {
             corpoTabela.innerHTML = "";
             listaAtivos.forEach(item => {
-                corpoTabela.innerHTML += `
-                    <tr>
-                        <td>${item.classe}</td>
-                        <td><strong>${item.ticker}</strong></td>
-                        <td>R$ ${item.valorBRL.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                    </tr>`;
+                corpoTabela.innerHTML += `<tr><td>${item.classe}</td><td><strong>${item.ticker}</strong></td><td>R$ ${item.valorBRL.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td></tr>`;
             });
         }
 
-        const totalGeral = totalAcoes + totalFiis + totalInternacional + totalCripto + totalRF;
+       const totalGeral = totalAcoes + totalFiis + totalInternacional + totalCripto + totalRF;
         
+        // Atualiza o Patrimônio Total
         const totalEl = document.getElementById('valor-patrimonio-total');
         if(totalEl) totalEl.innerText = totalGeral.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
+        // --- AQUI ESTAVA O ERRO: Adicionando o Ganho Acumulado ---
         const ganhoEl = document.getElementById('valor-ganho-acumulado');
-        if(ganhoEl) ganhoEl.innerText = meusAtivos.ganhoManual.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        if(ganhoEl) {
+            ganhoEl.innerText = meusAtivos.ganhoManual.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+        // -------------------------------------------------------
 
         atualizarCard('perc-rf', totalRF, totalGeral);
         atualizarCard('perc-fii', totalFiis, totalGeral);
@@ -110,16 +108,14 @@ async function atualizarCarteiraReal() {
         atualizarCard('perc-internacional', totalInternacional, totalGeral);
         atualizarCard('perc-cripto', totalCripto, totalGeral);
 
-    } catch (error) {
-        console.error("Erro na carteira:", error);
+    } catch (error) { 
+        console.error("Erro na carteira:", error); 
     }
 }
 
 function atualizarCard(id, parcial, total) {
     const el = document.getElementById(id);
-    if(el && total > 0) {
-        el.innerText = ((parcial / total) * 100).toFixed(1) + "%";
-    }
+    if(el && total > 0) el.innerText = ((parcial / total) * 100).toFixed(1) + "%";
 }
 
 // --- NAVEGAÇÃO PRINCIPAL ---
@@ -136,39 +132,33 @@ window.switchTab = function(event, tabId) {
         activeTab.style.display = "block"; 
     }
     if(event) event.currentTarget.classList.add("active");
-
-    if(tabId === 'tab-sobre' || document.getElementById('sobre-carteira')?.style.display === 'block') {
-        atualizarCarteiraReal();
-    }
+    if(tabId === 'tab-sobre') atualizarCarteiraReal();
 };
 
-// --- NAVEGAÇÃO DE CATEGORIAS (Educação) ---
+// --- NAVEGAÇÃO DE CATEGORIAS (Aprenda a Investir) ---
 window.abrirCategoria = function(catId, btn) {
-    // Esconde todos primeiro
     document.querySelectorAll('.pagina-artigo').forEach(art => {
         art.classList.remove('active');
-        art.style.display = 'none'; // Adicione esta linha
+        art.style.display = 'none';
     });
-    
     btn.parentElement.querySelectorAll('.btn-tema').forEach(b => b.classList.remove('active'));
     
-    // Mostra o selecionado
     const alvo = document.getElementById(catId);
-    alvo.classList.add('active');
-    alvo.style.display = 'block'; // Adicione esta linha
+    if(alvo) {
+        alvo.classList.add('active');
+        alvo.style.display = 'block';
+    }
     btn.classList.add('active');
 };
 
-// --- CORREÇÃO: FUNÇÃO DE SUB-ABAS (Educação e Renda Extra) ---
+// --- NAVEGAÇÃO DE SUB-CONTEÚDO (Ferramentas, Renda Extra, Sobre) ---
 window.abrirSubConteudo = function(subId, btn) {
     const containerPai = btn.closest('.artigo-completo') || 
                          btn.closest('.container-extra') || 
                          btn.closest('#tab-sobre');
     
     const seletoresGerais = '.sub-artigo-content, .sub-renda, .sub-sobre-content, .pagina-artigo';
-    const conteudos = containerPai.querySelectorAll(seletoresGerais);
-    
-    conteudos.forEach(div => {
+    containerPai.querySelectorAll(seletoresGerais).forEach(div => {
         div.style.display = 'none';
         div.classList.remove('active');
     });
@@ -180,67 +170,77 @@ window.abrirSubConteudo = function(subId, btn) {
         alvo.style.display = 'block';
         alvo.classList.add('active');
     }
-    
     btn.classList.add('active');
 
-    if(subId === 'sobre-carteira' || subId === 'tab-carteira') {
-        atualizarCarteiraReal();
-    }
+    if(subId === 'sobre-carteira' || subId === 'tab-carteira') atualizarCarteiraReal();
 };
 
-window.abrirSubSobre = function(subId, btn) {
-    abrirSubConteudo(subId, btn);
-};
+window.abrirSubSobre = function(subId, btn) { abrirSubConteudo(subId, btn); };
 
-// --- SIMULADOR CORRIGIDO ---
+// --- SIMULADORES ---
+function mascaraMoedaSimples(i) {
+    let v = i.value.replace(/\D/g, ''); 
+    if (v === '') { i.value = ''; return; }
+    v = parseInt(v).toLocaleString('pt-BR');
+    i.value = 'R$ ' + v;
+}
 
+function calcFireNovo() {
+    let valorTexto = document.getElementById('gastoFire').value;
+    let gasto = parseInt(valorTexto.replace(/\D/g, ""));
+    if (!gasto || gasto <= 0) return alert("Insira o gasto mensal.");
+
+    let metaPatrimonio = (gasto * 12) / 0.04;
+    document.getElementById('res-fire-novo').innerHTML = `
+        <div style="background:#f0fdf4; padding:20px; border-radius:12px; border-left:5px solid #00b386;">
+            <h2 style="color: #00b386;">${metaPatrimonio.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL', maximumFractionDigits: 0})}</h2>
+            <p>Meta considerando saque de R$ ${gasto.toLocaleString('pt-BR')} e reinvestimento para cobrir inflação.</p>
+        </div>`;
+}
+
+function calcInflacaoNova() {
+    let valorTexto = document.getElementById('valorInflacao').value;
+    let valorFuturo = parseInt(valorTexto.replace(/\D/g, ""));
+    let anos = parseInt(document.getElementById('anosInflacao').value);
+    if (!valorFuturo || !anos) return alert("Preencha os campos.");
+
+    let taxa = 0.045;
+    let poderDeCompraHoje = valorFuturo / Math.pow((1 + taxa), anos);
+    document.getElementById('res-inflacao-novo').innerHTML = `
+        <div style="background:#fff1f2; padding:20px; border-radius:12px; border-left:5px solid #e11d48;">
+            <p>Daqui a ${anos} anos, seus R$ ${valorFuturo.toLocaleString('pt-BR')} valerão o mesmo que:</p>
+            <h2 style="color: #e11d48;">${poderDeCompraHoje.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</h2>
+        </div>`;
+}
+
+function calcFixaInversa() {
+    let lci = parseFloat(document.getElementById('rentLciNovo').value);
+    let ir = parseFloat(document.getElementById('prazoCdbNovo').value);
+    if (!lci) return alert("Insira a rentabilidade.");
+    let cdbEquivalente = lci / (1 - ir);
+    document.getElementById('res-fixa-novo').innerHTML = `
+        <div style="background:#f8fafc; padding:20px; border-radius:10px; border-left:5px solid #1e293b;">
+            <h2 style="color: #00b386;">CDB de ${cdbEquivalente.toFixed(2)}% do CDI</h2>
+            <p>Equivalente a LCI/LCA de ${lci}% (IR ${(ir*100).toFixed(1)}%)</p>
+        </div>`;
+}
+
+// --- JUROS COMPOSTOS ORIGINAL ---
 function renderizarGrafico(labels, valoresRibas, valoresComp, nomeComp) {
     const canvas = document.getElementById('grafico');
     if (!canvas) return;
-    
     const ctx = canvas.getContext('2d');
-    
-    if (meuGrafico) {
-        meuGrafico.destroy();
-    }
-
+    if (meuGrafico) meuGrafico.destroy();
     meuGrafico = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
             datasets: [
-                { 
-                    label: 'Ribas Capital', 
-                    data: valoresRibas, 
-                    borderColor: '#00b386', 
-                    backgroundColor: 'rgba(0, 179, 134, 0.1)', 
-                    fill: true, 
-                    tension: 0.3,
-                    pointRadius: 2
-                },
-                { 
-                    label: nomeComp, 
-                    data: valoresComp, 
-                    borderColor: '#94a3b8', 
-                    borderDash: [5, 5], 
-                    fill: false,
-                    tension: 0.3,
-                    pointRadius: 0
-                }
+                { label: 'Ribas Capital', data: valoresRibas, borderColor: '#00b386', fill: true, tension: 0.3 },
+                { label: nomeComp, data: valoresComp, borderColor: '#94a3b8', borderDash: [5, 5], tension: 0.3 }
             ]
         },
-        options: { 
-            responsive: true, 
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: false,
-                    ticks: {
-                        callback: (value) => 'R$ ' + value.toLocaleString('pt-BR')
-                    }
-                }
-            }
-        }
+        options: { responsive: true, maintainAspectRatio: false }
     });
 }
 
@@ -252,127 +252,28 @@ window.calcular = function() {
     const tComp = parseFloat(document.getElementById("comparador").value);
     const nComp = document.getElementById("comparador").options[document.getElementById("comparador").selectedIndex].text;
     
-    if (tempo <= 0) {
-        alert("Por favor, insira um tempo maior que 0 meses.");
-        return;
-    }
-
     let m = vIni, mC = vIni, tI = vIni;
-    let vR = [parseFloat(vIni.toFixed(2))], vC = [parseFloat(vIni.toFixed(2))], labs = ["Início"], html = "";
+    let vR = [vIni], vC = [vIni], labs = ["Início"], html = "";
 
     for (let i = 1; i <= tempo; i++) {
-        let jurosMensal = m * taxa; 
-        m = m + jurosMensal + aMen; 
-        mC = mC * (1 + tComp) + aMen; 
-        tI += aMen;
-
-        vR.push(parseFloat(m.toFixed(2))); 
-        vC.push(parseFloat(mC.toFixed(2)));
-        labs.push(`Mês ${i}`);
-        
+        let jurosMensal = m * taxa; m = m + jurosMensal + aMen; mC = mC * (1 + tComp) + aMen; tI += aMen;
+        vR.push(m); vC.push(mC); labs.push(`Mês ${i}`);
         if (tempo <= 20 || i % 12 === 0 || i === tempo) {
-            html += `<tr>
-                <td>Mês ${i}</td>
-                <td>R$ ${tI.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                <td>R$ ${jurosMensal.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                <td>R$ ${m.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-            </tr>`;
+            html += `<tr><td>Mês ${i}</td><td>R$ ${tI.toLocaleString('pt-BR')}</td><td>R$ ${jurosMensal.toLocaleString('pt-BR')}</td><td>R$ ${m.toLocaleString('pt-BR')}</td></tr>`;
         }
     }
-
     document.getElementById("corpo-tabela").innerHTML = html;
-    document.getElementById("cards-resumo").innerHTML = `
-    <div class="stats-grid">
-        <div class="stat-card">
-            <span>TOTAL ACUMULADO</span>
-            <strong>${m.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
-        </div>
-        <div class="stat-card">
-            <span>RENDIMENTO MENSAL FINAL</span>
-            <strong>${(m * taxa).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
-        </div>
-    </div>`;
-
+    document.getElementById("cards-resumo").innerHTML = `<div class="stats-grid"><div class="stat-card"><span>TOTAL</span><strong>${m.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}</strong></div></div>`;
     document.getElementById("tabela-evolucao-container").style.display = "block";
-    
-    setTimeout(() => {
-        renderizarGrafico(labs, vR, vC, nComp);
-    }, 50);
+    setTimeout(() => renderizarGrafico(labs, vR, vC, nComp), 50);
 };
 
-// --- SIMULADOR REVERSO ---
 window.calcularReverso = function() {
     const objetivo = parseFloat(document.getElementById("objetivoFinal").value) || 0;
     const taxaMensal = (parseFloat(document.getElementById("taxaReverso").value) || 0) / 100;
     const meses = parseInt(document.getElementById("tempoReverso").value) || 0;
-
-    if (objetivo <= 0 || meses <= 0) {
-        alert("Por favor, preencha o objetivo e o tempo.");
-        return;
-    }
-
-    let aporte = 0;
-    if (taxaMensal > 0) {
-        aporte = (objetivo * taxaMensal) / (Math.pow(1 + taxaMensal, meses) - 1);
-    } else {
-        aporte = objetivo / meses;
-    }
-
-    const totalInvestido = aporte * meses;
-    const totalJuros = objetivo - totalInvestido;
-
-    document.getElementById("resultado-reverso").innerHTML = `
-        <div class="stats-grid" style="grid-template-columns: 1fr; margin-bottom: 20px;">
-            <div class="stat-card" style="border-top: 4px solid #00b386; background: #f8fafc;">
-                <span>APORTE MENSAL NECESSÁRIO</span>
-                <strong style="font-size: 2.2rem; color: #1e293b; display: block; margin-top: 10px;">
-                    ${aporte.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                </strong>
-            </div>
-        </div>
-        <div class="stats-grid">
-            <div class="stat-card">
-                <span>TOTAL INVESTIDO</span>
-                <strong>${totalInvestido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong>
-            </div>
-            <div class="stat-card">
-                <span>TOTAL EM JUROS</span>
-                <strong>${totalJuros.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong>
-            </div>
-        </div>`;
+    let aporte = taxaMensal > 0 ? (objetivo * taxaMensal) / (Math.pow(1 + taxaMensal, meses) - 1) : objetivo / meses;
+    document.getElementById("resultado-reverso").innerHTML = `<div class="stat-card"><strong>${aporte.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}</strong></div>`;
 };
 
-function calcFireNovo() {
-    let gasto = document.getElementById('gastoFire').value.replace(/\D/g, "") / 100;
-    if (!gasto) return alert("Insira o valor!");
-    let meta = (gasto * 12) / 0.04;
-    document.getElementById('res-fire-novo').innerHTML = `<div style="padding:15px; background:#f0fdf4; border-radius:10px;"><strong>Meta FIRE:</strong> R$ ${meta.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</div>`;
-}
-
-function calcFixaNova() {
-    let cdb = parseFloat(document.getElementById('rentCdbNovo').value);
-    let ir = parseFloat(document.getElementById('prazoCdbNovo').value);
-    if (!cdb) return alert("Insira a taxa do CDB!");
-    let eq = cdb * (1 - ir);
-    document.getElementById('res-fixa-novo').innerHTML = `<div style="padding:15px; background:#f8fafc; border-radius:10px;">Equivale a uma <strong>LCI/LCA de ${eq.toFixed(2)}% do CDI</strong></div>`;
-}
-
-function calcInflacaoNova() {
-    let valor = document.getElementById('valorInflacao').value.replace(/\D/g, "") / 100;
-    let anos = parseInt(document.getElementById('anosInflacao').value);
-    if (!valor || !anos) return alert("Preencha os campos!");
-    let final = valor / Math.pow(1.045, anos); // Estimativa IPCA 4.5%
-    document.getElementById('res-inflacao-novo').innerHTML = `<div style="padding:15px; background:#fff1f2; border-radius:10px;">Seu dinheiro valerá o equivalente a <strong>R$ ${final.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</strong> de hoje.</div>`;
-}
-
-// Inicialização
-document.addEventListener('DOMContentLoaded', () => {
-    atualizarCarteiraReal();
-});
-
-window.abrirSubSobre = function(subId, btn) {
-    abrirSubConteudo(subId, btn);
-    if(subId === 'sobre-carteira' || subId === 'tab-carteira') {
-        atualizarCarteiraReal();
-    }
-};
+document.addEventListener('DOMContentLoaded', () => { atualizarCarteiraReal(); });
