@@ -1,8 +1,12 @@
 // --- CONFIGURAÇÃO GLOBAL E API ---
 const TOKEN = "rhwoawpasjrgK2eTM2MqS1";
 
-// --- COTAÇÃO DO BITCOIN ---
-const COTACAO_BITCOIN_BRL = 354333.90; 
+// --- INDICADORES MANUAIS (Altere aqui para atualizar o site todo) ---
+const INDICADORES = {
+    bitcoin: 354333.90,
+    ipca: 0.05, // 5.0% ao ano (usado no Poder de Compra e FIRE)
+    cdi: 0.1175   // 11.75% ao ano (usado como base de comparação)
+};
 
 const meusAtivos = {
     acoes: {
@@ -39,7 +43,7 @@ async function atualizarCarteiraReal() {
 
         const notaDolar = document.getElementById('nota-dolar');
         if(notaDolar) {
-            notaDolar.innerText = `* Câmbio: US$ 1 = R$ ${cotacaoDolar.toFixed(2)} | BTC: R$ ${COTACAO_BITCOIN_BRL.toLocaleString('pt-BR')}`;
+            notaDolar.innerText = `* Câmbio: US$ 1 = R$ ${cotacaoDolar.toFixed(2)} | BTC: R$ ${INDICADORES.bitcoin.toLocaleString('pt-BR')}`;
         }
 
         let totalAcoes = 0, totalFiis = 0, totalInternacional = 0, totalCripto = 0, totalRF = meusAtivos.rendaFixa;
@@ -72,7 +76,7 @@ async function atualizarCarteiraReal() {
             }
         });
 
-        const valorBTC = meusAtivos.cripto.BTC * COTACAO_BITCOIN_BRL;
+        const valorBTC = meusAtivos.cripto.BTC * INDICADORES.bitcoin;
         totalCripto = valorBTC;
         listaAtivos.push({ classe: "Cripto", ticker: "BITCOIN", valorBRL: valorBTC });
         listaAtivos.push({ classe: "Imóvel", ticker: "TERRENO", valorBRL: meusAtivos.imoveisFisicos });
@@ -89,18 +93,15 @@ async function atualizarCarteiraReal() {
             });
         }
 
-       const totalGeral = totalAcoes + totalFiis + totalInternacional + totalCripto + totalRF;
+        const totalGeral = totalAcoes + totalFiis + totalInternacional + totalCripto + totalRF;
         
-        // Atualiza o Patrimônio Total
+        // Atualiza Patrimônio Total
         const totalEl = document.getElementById('valor-patrimonio-total');
         if(totalEl) totalEl.innerText = totalGeral.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-        // --- AQUI ESTAVA O ERRO: Adicionando o Ganho Acumulado ---
+        // Atualiza Ganho Acumulado (Corrigido)
         const ganhoEl = document.getElementById('valor-ganho-acumulado');
-        if(ganhoEl) {
-            ganhoEl.innerText = meusAtivos.ganhoManual.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        }
-        // -------------------------------------------------------
+        if(ganhoEl) ganhoEl.innerText = meusAtivos.ganhoManual.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
         atualizarCard('perc-rf', totalRF, totalGeral);
         atualizarCard('perc-fii', totalFiis, totalGeral);
@@ -108,9 +109,7 @@ async function atualizarCarteiraReal() {
         atualizarCard('perc-internacional', totalInternacional, totalGeral);
         atualizarCard('perc-cripto', totalCripto, totalGeral);
 
-    } catch (error) { 
-        console.error("Erro na carteira:", error); 
-    }
+    } catch (error) { console.error("Erro na carteira:", error); }
 }
 
 function atualizarCard(id, parcial, total) {
@@ -118,66 +117,40 @@ function atualizarCard(id, parcial, total) {
     if(el && total > 0) el.innerText = ((parcial / total) * 100).toFixed(1) + "%";
 }
 
-// --- NAVEGAÇÃO PRINCIPAL ---
+// --- NAVEGAÇÃO ---
 window.switchTab = function(event, tabId) {
-    document.querySelectorAll(".tab-content").forEach(c => { 
-        c.classList.remove("active"); 
-        c.style.display = "none"; 
-    });
+    document.querySelectorAll(".tab-content").forEach(c => { c.classList.remove("active"); c.style.display = "none"; });
     document.querySelectorAll(".tab-link").forEach(l => l.classList.remove("active"));
-    
     const activeTab = document.getElementById(tabId);
-    if (activeTab) { 
-        activeTab.classList.add("active"); 
-        activeTab.style.display = "block"; 
-    }
+    if (activeTab) { activeTab.classList.add("active"); activeTab.style.display = "block"; }
     if(event) event.currentTarget.classList.add("active");
     if(tabId === 'tab-sobre') atualizarCarteiraReal();
 };
 
-// --- NAVEGAÇÃO DE CATEGORIAS (Aprenda a Investir) ---
 window.abrirCategoria = function(catId, btn) {
-    document.querySelectorAll('.pagina-artigo').forEach(art => {
-        art.classList.remove('active');
-        art.style.display = 'none';
-    });
+    document.querySelectorAll('.pagina-artigo').forEach(art => { art.classList.remove('active'); art.style.display = 'none'; });
     btn.parentElement.querySelectorAll('.btn-tema').forEach(b => b.classList.remove('active'));
-    
     const alvo = document.getElementById(catId);
-    if(alvo) {
-        alvo.classList.add('active');
-        alvo.style.display = 'block';
-    }
+    if(alvo) { alvo.classList.add('active'); alvo.style.display = 'block'; }
     btn.classList.add('active');
 };
 
-// --- NAVEGAÇÃO DE SUB-CONTEÚDO (Ferramentas, Renda Extra, Sobre) ---
 window.abrirSubConteudo = function(subId, btn) {
-    const containerPai = btn.closest('.artigo-completo') || 
-                         btn.closest('.container-extra') || 
-                         btn.closest('#tab-sobre');
-    
-    const seletoresGerais = '.sub-artigo-content, .sub-renda, .sub-sobre-content, .pagina-artigo';
-    containerPai.querySelectorAll(seletoresGerais).forEach(div => {
-        div.style.display = 'none';
-        div.classList.remove('active');
+    const containerPai = btn.closest('.artigo-completo') || btn.closest('.container-extra') || btn.closest('#tab-sobre');
+    containerPai.querySelectorAll('.sub-artigo-content, .sub-renda, .sub-sobre-content, .pagina-artigo').forEach(div => {
+        div.style.display = 'none'; div.classList.remove('active');
     });
-
     btn.parentElement.querySelectorAll('.btn-tema, .tab-link').forEach(b => b.classList.remove('active'));
-
     const alvo = document.getElementById(subId);
-    if(alvo) {
-        alvo.style.display = 'block';
-        alvo.classList.add('active');
-    }
+    if(alvo) { alvo.style.display = 'block'; alvo.classList.add('active'); }
     btn.classList.add('active');
-
     if(subId === 'sobre-carteira' || subId === 'tab-carteira') atualizarCarteiraReal();
 };
 
 window.abrirSubSobre = function(subId, btn) { abrirSubConteudo(subId, btn); };
 
-// --- SIMULADORES ---
+// --- SIMULADORES (USANDO INDICADORES GLOBAIS) ---
+
 function mascaraMoedaSimples(i) {
     let v = i.value.replace(/\D/g, ''); 
     if (v === '') { i.value = ''; return; }
@@ -194,7 +167,7 @@ function calcFireNovo() {
     document.getElementById('res-fire-novo').innerHTML = `
         <div style="background:#f0fdf4; padding:20px; border-radius:12px; border-left:5px solid #00b386;">
             <h2 style="color: #00b386;">${metaPatrimonio.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL', maximumFractionDigits: 0})}</h2>
-            <p>Meta considerando saque de R$ ${gasto.toLocaleString('pt-BR')} e reinvestimento para cobrir inflação.</p>
+            <p>Meta baseada na Regra dos 4%. Você saca R$ ${gasto.toLocaleString('pt-BR')} e reinveste o excedente para manter o poder de compra (Inflação: ${(INDICADORES.ipca * 100).toFixed(1)}% a.a.).</p>
         </div>`;
 }
 
@@ -204,12 +177,14 @@ function calcInflacaoNova() {
     let anos = parseInt(document.getElementById('anosInflacao').value);
     if (!valorFuturo || !anos) return alert("Preencha os campos.");
 
-    let taxa = 0.045;
-    let poderDeCompraHoje = valorFuturo / Math.pow((1 + taxa), anos);
+    // Usa o IPCA definido no topo
+    let poderDeCompraHoje = valorFuturo / Math.pow((1 + INDICADORES.ipca), anos);
+    
     document.getElementById('res-inflacao-novo').innerHTML = `
         <div style="background:#fff1f2; padding:20px; border-radius:12px; border-left:5px solid #e11d48;">
-            <p>Daqui a ${anos} anos, seus R$ ${valorFuturo.toLocaleString('pt-BR')} valerão o mesmo que:</p>
+            <p>Em ${anos} anos, R$ ${valorFuturo.toLocaleString('pt-BR')} terão o poder de compra de:</p>
             <h2 style="color: #e11d48;">${poderDeCompraHoje.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</h2>
+            <small>*Considerando IPCA manual de ${(INDICADORES.ipca * 100).toFixed(1)}% ao ano.</small>
         </div>`;
 }
 
@@ -221,7 +196,7 @@ function calcFixaInversa() {
     document.getElementById('res-fixa-novo').innerHTML = `
         <div style="background:#f8fafc; padding:20px; border-radius:10px; border-left:5px solid #1e293b;">
             <h2 style="color: #00b386;">CDB de ${cdbEquivalente.toFixed(2)}% do CDI</h2>
-            <p>Equivalente a LCI/LCA de ${lci}% (IR ${(ir*100).toFixed(1)}%)</p>
+            <p>Equivalente a LCI de ${lci}% (CDI atual: ${(INDICADORES.cdi * 100).toFixed(2)}%)</p>
         </div>`;
 }
 
@@ -247,28 +222,80 @@ function renderizarGrafico(labels, valoresRibas, valoresComp, nomeComp) {
 window.calcular = function() {
     const vIni = parseFloat(document.getElementById("valorInicial").value) || 0;
     const aMen = parseFloat(document.getElementById("aporteMensal").value) || 0;
-    const taxa = (parseFloat(document.getElementById("taxa").value) || 0) / 100;
-    const tempo = parseInt(document.getElementById("tempo").value) || 0;
-    const tComp = parseFloat(document.getElementById("comparador").value);
-    const nComp = document.getElementById("comparador").options[document.getElementById("comparador").selectedIndex].text;
     
-    let m = vIni, mC = vIni, tI = vIni;
-    let vR = [vIni], vC = [vIni], labs = ["Início"], html = "";
+    // Taxa digitada considerada ao MÊS (Ex: 1 = 1% am)
+    const taxaMensalDigitada = (parseFloat(document.getElementById("taxa").value) || 0) / 100;
+
+    const tempo = parseInt(document.getElementById("tempo").value) || 0;
+    const selectComp = document.getElementById("comparador");
+    const valorSelect = selectComp.value.toLowerCase();
+    const nComp = selectComp.options[selectComp.selectedIndex].text;
+
+    // Pega Inflação/CDI do topo (Anual) e converte para Mensal
+    let taxaCompAnual = 0;
+    if (valorSelect.includes("ipca") || nComp.toLowerCase().includes("inflação")) {
+        taxaCompAnual = INDICADORES.ipca;
+    } else if (valorSelect.includes("cdi") || nComp.toLowerCase().includes("cdi")) {
+        taxaCompAnual = INDICADORES.cdi;
+    } else {
+        taxaCompAnual = parseFloat(valorSelect) / 100 || 0;
+    }
+
+    const taxaCompMensal = Math.pow(1 + taxaCompAnual, 1/12) - 1;
+    
+    if (tempo <= 0) return alert("Insira um tempo maior que 0.");
+
+    let m = vIni;      
+    let mC = vIni;     
+    let tI = vIni;     
+    let vR = [vIni];   
+    let vC = [vIni];   
+    let labs = ["Início"];
+    let html = "";
 
     for (let i = 1; i <= tempo; i++) {
-        let jurosMensal = m * taxa; m = m + jurosMensal + aMen; mC = mC * (1 + tComp) + aMen; tI += aMen;
-        vR.push(m); vC.push(mC); labs.push(`Mês ${i}`);
+        let jurosDoMes = m * taxaMensalDigitada; 
+        m = m + jurosDoMes + aMen; 
+
+        let jurosCompMes = mC * taxaCompMensal;
+        mC = mC + jurosCompMes + aMen; 
+        
+        tI += aMen;
+
+        vR.push(parseFloat(m.toFixed(2))); 
+        vC.push(parseFloat(mC.toFixed(2)));
+        labs.push(`Mês ${i}`);
+        
+        // --- TABELA FORMATADA COM 2 CASAS DECIMAIS ---
         if (tempo <= 20 || i % 12 === 0 || i === tempo) {
-            html += `<tr><td>Mês ${i}</td><td>R$ ${tI.toLocaleString('pt-BR')}</td><td>R$ ${jurosMensal.toLocaleString('pt-BR')}</td><td>R$ ${m.toLocaleString('pt-BR')}</td></tr>`;
+            html += `
+                <tr>
+                    <td>Mês ${i}</td>
+                    <td>R$ ${tI.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    <td>R$ ${jurosDoMes.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    <td>R$ ${m.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                </tr>`;
         }
     }
-    document.getElementById("corpo-tabela").innerHTML = html;
-    document.getElementById("cards-resumo").innerHTML = `<div class="stats-grid"><div class="stat-card"><span>TOTAL</span><strong>${m.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}</strong></div></div>`;
-    document.getElementById("tabela-evolucao-container").style.display = "block";
-    setTimeout(() => renderizarGrafico(labs, vR, vC, nComp), 50);
-};
 
-window.calcularReverso = function() {
+    document.getElementById("corpo-tabela").innerHTML = html;
+    
+    // Cards de Resumo também formatados
+    document.getElementById("cards-resumo").innerHTML = `
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span>TOTAL ACUMULADO</span>
+                <strong>${m.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}</strong>
+            </div>
+            <div class="stat-card">
+                <span>RENDIMENTO MENSAL FINAL</span>
+                <strong>${(m * taxaMensalDigitada).toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}</strong>
+            </div>
+        </div>`;
+
+    document.getElementById("tabela-evolucao-container").style.display = "block";
+    setTimeout(() => { renderizarGrafico(labs, vR, vC, nComp); }, 50);
+};window.calcularReverso = function() {
     const objetivo = parseFloat(document.getElementById("objetivoFinal").value) || 0;
     const taxaMensal = (parseFloat(document.getElementById("taxaReverso").value) || 0) / 100;
     const meses = parseInt(document.getElementById("tempoReverso").value) || 0;
