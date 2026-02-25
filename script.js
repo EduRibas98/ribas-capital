@@ -4,8 +4,8 @@ const TOKEN = "rhwoawpasjrgK2eTM2MqS1";
 // --- INDICADORES MANUAIS (Altere aqui para atualizar o site todo) ---
 const INDICADORES = {
     bitcoin: 354333.90,
-    ipca: 0.05, // 5.0% ao ano (usado no Poder de Compra e FIRE)
-    cdi: 0.1175   // 11.75% ao ano (usado como base de comparação)
+    ipca: 0.0426, // 4.26% ao ano (usado no Poder de Compra e FIRE)
+    cdi: 0.1490   // 14.90% ao ano (usado como base de comparação)
 };
 
 const meusAtivos = {
