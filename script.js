@@ -24,7 +24,7 @@ const meusAtivos = {
     },
     imoveisFisicos: 28637.25, 
     rendaFixa: 1003.60,
-    ganhoManual: 15450.75 
+    custoAquisicao: 30329.14 
 };
 
 let meuGrafico = null;
@@ -93,15 +93,21 @@ async function atualizarCarteiraReal() {
             });
         }
 
+        // Pega a soma de todos os ativos
         const totalGeral = totalAcoes + totalFiis + totalInternacional + totalCripto + totalRF;
         
-        // Atualiza Patrimônio Total
+        // Exibe o Patrimônio Total na tela
         const totalEl = document.getElementById('valor-patrimonio-total');
         if(totalEl) totalEl.innerText = totalGeral.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-        // Atualiza Ganho Acumulado (Corrigido)
+        // --- CÁLCULO DO GANHO (Patrimônio Atual menos o Custo que você inseriu) ---
+        const ganhoCalculado = totalGeral - meusAtivos.custoAquisicao;
+
+        // Exibe o Ganho Acumulado na tela
         const ganhoEl = document.getElementById('valor-ganho-acumulado');
-        if(ganhoEl) ganhoEl.innerText = meusAtivos.ganhoManual.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        if(ganhoEl) {
+            ganhoEl.innerText = ganhoCalculado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
 
         atualizarCard('perc-rf', totalRF, totalGeral);
         atualizarCard('perc-fii', totalFiis, totalGeral);
