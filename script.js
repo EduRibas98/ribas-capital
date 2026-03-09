@@ -10,8 +10,8 @@ const INDICADORES = {
 
 const meusAtivos = {
     acoes: {
-        "LEVE3": 45, "ITSA3": 81, "WEGE3": 31, "EGIE3": 48, 
-        "JHSF3": 124, "MDIA3": 41, "BBDC3": 80, "AUVP11": 15
+        "LEVE3": 45, "ITSA3": 82, "WEGE3": 31, "EGIE3": 48, 
+        "JHSF3": 124, "MDIA3": 42, "BBDC3": 82, "AUVP11": 15
     },
     fiis: {
         "KNRI11": 2, "HGBS11": 27, "TVRI11": 5, "HGLG11": 2, "BTLG11": 3, "XPML11": 5
@@ -20,11 +20,11 @@ const meusAtivos = {
         "BRK-B": 0.17804802, "GOOGL": 0.3531, "JPM": 0.4465, "KO": 0.9565
     },
     cripto: {
-        "BTC": 0.00037339 
+        "BTC": 0.00088874 
     },
     imoveisFisicos: 28637.25, 
-    rendaFixa: 1003.60,
-    custoAquisicao: 30329.14 
+    rendaFixa: 1811,21,
+    custoAquisicao: 31351,03 
 };
 
 let meuGrafico = null;
