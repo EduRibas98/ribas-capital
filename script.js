@@ -3,7 +3,7 @@ const TOKEN = "ohykvzJTUhjzwGW3Rw89XB";
 
 // --- INDICADORES MANUAIS (Altere aqui para atualizar o site todo) ---
 const INDICADORES = {
-    bitcoin: 383369,16,
+    bitcoin: 383369.16,
     ipca: 0.0426, // 4.26% ao ano
     cdi: 0.1490   // 14.90% ao ano
 };
