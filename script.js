@@ -160,7 +160,7 @@ try {
 
         listaAtivosParaTabela.push({
             classe: "Renda Fixa",
-            ticker: "IPCA",
+            ticker: "Caixa",
             valorBRL: meusAtivos.rendaFixa
         });
 
