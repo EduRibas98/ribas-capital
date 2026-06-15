@@ -3,28 +3,28 @@ const TOKEN = "ohykvzJTUhjzwGW3Rw89XB";
 
 // --- INDICADORES MANUAIS (Altere aqui para atualizar o site todo) ---
 const INDICADORES = {
-    bitcoin: 392798.64,
+    bitcoin: 338641,29.29,
     ipca: 0.0426, // 4.26% ao ano
     cdi: 0.1465   // 14.65% ao ano
 };
 
 const meusAtivos = {
     acoes: {
-        "LEVE3": 45, "ITSA3": 83, "WEGE3": 31, "EGIE3": 49, 
-        "JHSF3": 126, "MDIA3": 42, "BBDC3": 82, "BPAC3":2, "AUVP11": 15
+        "LEVE3": 55, "ITSA3": 84, "WEGE3": 42, "BALM3": 41, "EGIE3": 53, 
+        "JHSF3": 126, "MDIA3": 57, "BBDC3": 94, "BPAC3":67, "AUVP11": 18
     },
     fiis: {
-        "KNRI11": 2, "HGBS11": 27, "TVRI11": 5, "HGLG11": 2, "BTLG11": 3, "XPML11": 5
+        "KNRI11": 3, "HGBS11": 41, "TVRI11": 8, "HGLG11": 3, "BTLG11": 8, "XPML11": 7
     },
     internacional: {
         "BRK-B": 0.17804802, "GOOGL": 0.3531, "JPM": 0.4465, "KO": 0.9565
     },
     cripto: {
-        "BTC": 0.00126017
+        "BTC": 0.00244302
     },
     imoveisFisicos: 28637.25, 
-    rendaFixa: 3775.07,
-    custoAquisicao: 33272.97 
+    rendaFixa: 7614.31,
+    custoAquisicao: 40275.29 
 };
 
 let meuGrafico = null;
@@ -67,8 +67,8 @@ try {
         const usdData = todosResultados.find(res => res.symbol === "USDBRL");
 
         const cotacaoDolar = usdData
-            ? (usdData.regularMarketPrice || 5.22)
-            : 5.22;
+            ? (usdData.regularMarketPrice || 5.08)
+            : 5.08;
 
         const notaDolar = document.getElementById('nota-dolar');
 
