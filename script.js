@@ -32,10 +32,15 @@ let meuGrafico = null;
 async function atualizarCarteiraReal() {
 
     const listaAcoes = Object.keys(meusAtivos.acoes);
-    const listaFiis = Object.keys(meusAtivos.fiis);
+const listaFiis = Object.keys(meusAtivos.fiis);
+const listaInternacional = Object.keys(meusAtivos.internacional);
 
-    // brapi NÃO suporta ações internacionais
-    const todosTickers = [...listaAcoes, ...listaFiis, "USDBRL"];
+const todosTickers = [
+    ...listaAcoes,
+    ...listaFiis,
+    ...listaInternacional,
+    "USDBRL"
+];
 
    let todosResultados = [];
 
@@ -121,25 +126,36 @@ try {
 
         });
 
-        // internacionais (valor manual em USD)
+        // internacionais (preço obtido via BRAPI)
 
-        Object.keys(meusAtivos.internacional).forEach(ticker => {
+Object.keys(meusAtivos.internacional).forEach(ticker => {
 
-            const quantidade = meusAtivos.internacional[ticker];
+    const quantidade = meusAtivos.internacional[ticker];
 
-            const valorEstimadoUSD = 100; // placeholder
-            const valorBRL = valorEstimadoUSD * cotacaoDolar * quantidade;
+    const ativoInternacional = todosResultados.find(
+        ativo => ativo.symbol === ticker
+    );
 
-            totalInternacional += valorBRL;
+    if (!ativoInternacional) {
+        console.warn(`Cotação não encontrada para ${ticker}`);
+        return;
+    }
 
-            listaAtivosParaTabela.push({
-                classe: "Empresas EUA",
-                ticker,
-                valorBRL
-            });
+    const valorEstimadoUSD =
+        ativoInternacional.regularMarketPrice || 0;
 
-        });
+    const valorBRL =
+        valorEstimadoUSD * cotacaoDolar * quantidade;
 
+    totalInternacional += valorBRL;
+
+    listaAtivosParaTabela.push({
+        classe: "Empresas EUA",
+        ticker,
+        valorBRL
+    });
+
+});
         const valorBTC = meusAtivos.cripto.BTC * INDICADORES.bitcoin;
 
         totalCripto = valorBTC;
