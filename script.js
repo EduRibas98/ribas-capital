@@ -79,7 +79,7 @@ try {
 
         if (notaDolar) {
             notaDolar.innerText =
-                `* Câmbio: US$ 5.08 = R$ ${cotacaoDolar.toFixed(2)} | BTC: R$ ${INDICADORES.bitcoin.toLocaleString('pt-BR')}`;
+                `* Câmbio: US$ 1.00 = R$ ${cotacaoDolar.toFixed(2)} | BTC: R$ ${INDICADORES.bitcoin.toLocaleString('pt-BR')}`;
         }
 
         let totalAcoes = 0;
