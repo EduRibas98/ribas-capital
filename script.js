@@ -24,7 +24,7 @@ const meusAtivos = {
     },
     imoveisFisicos: 28637.25, 
     rendaFixa: 7949.35,
-    custoAquisicao: 41110.60 
+    custoAquisicao: 41098.27 
 };
 
 let meuGrafico = null;
