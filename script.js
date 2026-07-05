@@ -72,8 +72,8 @@ try {
         const usdData = todosResultados.find(res => res.symbol === "USDBRL");
 
         const cotacaoDolar = usdData
-            ? (usdData.regularMarketPrice || 5.08)
-            : 5.08;
+            ? (usdData.regularMarketPrice || 5.18)
+            : 5.18;
 
         const notaDolar = document.getElementById('nota-dolar');
 
