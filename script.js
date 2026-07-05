@@ -3,15 +3,15 @@ const TOKEN = "ohykvzJTUhjzwGW3Rw89XB";
 
 // --- INDICADORES MANUAIS (Altere aqui para atualizar o site todo) ---
 const INDICADORES = {
-    bitcoin: 338641.29,
-    ipca: 0.0426, // 4.26% ao ano
-    cdi: 0.1465   // 14.65% ao ano
+    bitcoin: 330375.20,
+    ipca: 0.0472, // 4.72% ao ano
+    cdi: 0.1415   // 14.15% ao ano
 };
 
 const meusAtivos = {
     acoes: {
-        "LEVE3": 55, "ITSA3": 84, "WEGE3": 42, "BALM3": 41, "EGIE3": 53, 
-        "JHSF3": 126, "MDIA3": 57, "BBDC3": 94, "BPAC3":67, "AUVP11": 18
+        "LEVE3": 57, "ITSA3": 84, "WEGE3": 42, "BALM3": 44, "EGIE3": 56, 
+        "JHSF3": 134, "MDIA3": 68, "BBDC3": 97, "BPAC3":68, "AUVP11": 19
     },
     fiis: {
         "KNRI11": 3, "HGBS11": 41, "TVRI11": 8, "HGLG11": 3, "BTLG11": 8, "XPML11": 7
@@ -20,11 +20,11 @@ const meusAtivos = {
         "BRK-B": 0.17804802, "GOOGL": 0.3531, "JPM": 0.4465, "KO": 0.9565
     },
     cripto: {
-        "BTC": 0.00244302
+        "BTC": 0.00273011
     },
     imoveisFisicos: 28637.25, 
-    rendaFixa: 7614.31,
-    custoAquisicao: 40275.29 
+    rendaFixa: 7949.35,
+    custoAquisicao: 41110.60 
 };
 
 let meuGrafico = null;
