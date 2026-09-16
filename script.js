@@ -10,11 +10,11 @@ const INDICADORES = {
 
 const meusAtivos = {
     acoes: {
-        "LEVE3": 57, "ITSA3": 84, "WEGE3": 42, "BALM3": 44, "EGIE3": 56, 
-        "JHSF3": 134, "MDIA3": 68, "BBDC3": 97, "BPAC3":68, "AUVP11": 19
+        "LEVE3": 57, "ITSA3": 84, "WEGE3": 42, "BALM3": 44, "EGIE3": 68, "KLBN3":364,
+        "JHSF3": 138, "MDIA3": 94, "BBDC3": 102, "BPAC3":68, "AUVP11": 19
     },
     fiis: {
-        "KNRI11": 3, "HGBS11": 41, "TVRI11": 8, "HGLG11": 3, "BTLG11": 8, "XPML11": 7
+        "KNRI11": 3, "HGBS11": 46, "TVRI11": 9, "HGLG11": 3, "BTLG11": 8, "XPML11": 8
     },
     internacional: {
         "BRK-B": 0.17804802, "GOOGL": 0.3531, "JPM": 0.4465, "KO": 0.9565
@@ -23,8 +23,8 @@ const meusAtivos = {
         "BTC": 0.00273011
     },
     imoveisFisicos: 28637.25, 
-    rendaFixa: 7949.35,
-    custoAquisicao: 41098.27 
+    rendaFixa: 8930.85,
+    custoAquisicao: 43787.03 
 };
 
 let meuGrafico = null;
@@ -72,7 +72,7 @@ try {
         const usdData = todosResultados.find(res => res.symbol === "USDBRL");
 
         const cotacaoDolar = usdData
-            ? (usdData.regularMarketPrice || 5.18)
+            ? (usdData.regularMarketPrice || 5.15)
             : 5.18;
 
         const notaDolar = document.getElementById('nota-dolar');
