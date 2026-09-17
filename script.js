@@ -73,7 +73,7 @@ try {
 
         const cotacaoDolar = usdData
             ? (usdData.regularMarketPrice || 5.15)
-            : 5.18;
+            : 5.15;
 
         const notaDolar = document.getElementById('nota-dolar');
 
