@@ -23,7 +23,7 @@ const meusAtivos = {
         "BTC": 0.00273011
     },
     imoveisFisicos: 28637.25, 
-    rendaFixa: 9684.00,
+    rendaFixa: 9690.00,
     custoAquisicao: 44829.85 
 };
 
