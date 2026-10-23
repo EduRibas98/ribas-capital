@@ -14,7 +14,7 @@ const meusAtivos = {
         "JHSF3": 138, "MDIA3": 104, "BBDC3": 102, "BPAC3":68, "AUVP11": 19
     },
     fiis: {
-        "KNRI11": 3, "HGBS11": 46, "TVRI11": 9, "HGLG11": 3, "BTLG11": 8, "XPML11": 8
+        "KNRI11": 3, "HGBS11": 46, "BTLG11": 8, "TVRI11": 9, "HGLG11": 3, "XPML11": 8
     },
     internacional: {
         "BRK-B": 0.17804802, "GOOGL": 0.3531, "JPM": 0.4465, "KO": 0.9565
